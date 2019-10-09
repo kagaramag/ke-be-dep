@@ -7,6 +7,10 @@ export default input => {
       .max(45)
       .required()
       .label("First name"),
+    gender: Joi.string()
+      .min(4)
+      .max(45)
+      .optional(),
     lastName: Joi.string()
       .min(2)
       .max(45)
