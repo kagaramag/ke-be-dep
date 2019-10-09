@@ -13,7 +13,6 @@ export default async (user = {}) => {
     };
     newUser = await db.User.create(user, { logging: false });
 
-    console.log(newUser);
     // Assign a role to a given user
     await db.UserRole.create(
       { roleId: 1, userId: newUser.dataValues.id },
