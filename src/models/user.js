@@ -82,6 +82,11 @@ export default (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
       onDelete: "CASCADE"
     });
+    User.hasOne(models.Location, {
+      foreignKey: "userId",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE"
+    });
     User.hasOne(models.UserRole, {
       foreignKey: "userId",
       onUpdate: "CASCADE",
