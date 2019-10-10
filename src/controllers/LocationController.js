@@ -33,7 +33,6 @@ export default class LocationController {
    */
   static async getLocation(req, res) {
     const location = await Location.findOne(req.user.id);
-    console.log(location);
 
     return !location.error
       ? res.status(status.OK).json({
