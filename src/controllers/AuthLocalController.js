@@ -162,14 +162,14 @@ export default class AuthLocalController {
     }
 
     const tokenizedEmail = await helper.token.generate({ email });
-    // await helper.sendMail(email, "resetPassword", {
-    //   email,
-    //   names: `${result.firstName} ${result.lastName}`
-    // }); // send mail
+    await helper.sendMail(email, "resetPassword", {
+      email,
+      names: `${result.firstName} ${result.lastName}`
+    }); // send mail
 
     return res.status(status.OK).json({
       message: "Email sent, please check your email",
-      redirect: `http://localhost:3000/api/v1/auth/reset/${tokenizedEmail}`
+      redirect: tokenizedEmail
     });
   }
 
