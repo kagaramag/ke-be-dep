@@ -161,13 +161,15 @@ export default class AuthLocalController {
       });
     }
 
-    await helper.sendMail(email, "resetPassword", {
-      email,
-      names: `${result.firstName} ${result.lastName}`
-    }); // send mail
+    const tokenizedEmail = await helper.token.generate({ email });
+    // await helper.sendMail(email, "resetPassword", {
+    //   email,
+    //   names: `${result.firstName} ${result.lastName}`
+    // }); // send mail
 
     return res.status(status.OK).json({
-      message: "Email sent, please check your email"
+      message: "Email sent, please check your email",
+      redirect: `http://localhost:3000/api/v1/auth/reset/${tokenizedEmail}`
     });
   }
 
@@ -200,18 +202,15 @@ export default class AuthLocalController {
         .status(status.BAD_REQUEST)
         .json({ message: isPasswordValid[0] });
     }
-    const { id } = helper.token.decode(token);
-
-    const user = await User.findOne({
-      id
-    });
-    const isUpdated = await User.update({
-      password: helper.password.hash(passwordOne)
-    });
-
+    const { email } = helper.token.decode(token);
+    const isUpdated = await User.update(
+      { password: helper.password.hash(passwordOne) },
+      { email }
+    );
     delete isUpdated.password;
     return isUpdated
       ? res.status(status.OK).json({
+          isUpdated,
           message: "Success! your password has been changed."
         })
       : res
