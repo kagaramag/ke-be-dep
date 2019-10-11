@@ -161,13 +161,15 @@ export default class AuthLocalController {
       });
     }
 
+    const tokenizedEmail = await helper.token.generate({ email });
     await helper.sendMail(email, "resetPassword", {
       email,
       names: `${result.firstName} ${result.lastName}`
     }); // send mail
 
     return res.status(status.OK).json({
-      message: "Email sent, please check your email"
+      message: "Email sent, please check your email",
+      redirect: tokenizedEmail
     });
   }
 
