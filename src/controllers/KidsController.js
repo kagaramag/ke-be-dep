@@ -40,6 +40,7 @@ export default class KidsController {
     const kids = await Kid.findAll({ userId: req.user.id });
     return !kids.error
       ? res.status(status.OK).json({
+        message: kids.length ? 'You have fetched kids successfully.' : 'Sorry, you did not register a kid yet.',
         kids
       })
       : res.status(status.SERVER_ERROR).json({

@@ -5,9 +5,10 @@ import db from '../../models';
  * @returns {object} Object representing the response returned
  */
 export default async (userId) => {
+  const where = { ...userId, status: 'inactive' };
   try {
     const response = await db.Kid.findAll({
-      where: userId,
+      where,
     });
     return response;
   } catch (error) {

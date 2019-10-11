@@ -14,7 +14,7 @@ export default async (req, res, next) => {
   if (decodedToken.errors || !decodedToken) {
     return res
       .status(status.UNAUTHORIZED)
-      .json({ errors: { token: 'Failed to authenticate token' } });
+      .json({ errors: { token: 'Failed to authenticate you. Login to continue' } });
   }
 
   const isLoggedout = decodedToken.id ? await Token.findOne(decodedToken.id, token) : {};

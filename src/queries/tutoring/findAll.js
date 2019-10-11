@@ -40,7 +40,7 @@ export default async (id, role) => {
     if (role === 'parent') {
       const response = await db.Kid.findAll(
         {
-          where: { userId: id },
+          where: { userId: id, status: 'active' },
           include: [
             {
               model: db.Tutoring,

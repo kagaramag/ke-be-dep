@@ -22,8 +22,8 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      age: {
-        type: DataTypes.INTEGER,
+      birth: {
+        type: DataTypes.DATE,
         allowNull: false
       },
       class: {
@@ -32,10 +32,6 @@ export default (sequelize, DataTypes) => {
       },
       school: {
         type: DataTypes.STRING,
-        allowNull: true
-      },
-      subject: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true
       },
       createdAt: {
