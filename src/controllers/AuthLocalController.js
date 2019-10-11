@@ -200,15 +200,18 @@ export default class AuthLocalController {
         .status(status.BAD_REQUEST)
         .json({ message: isPasswordValid[0] });
     }
-    const { email } = helper.token.decode(token);
-    const isUpdated = await User.update(
-      { password: helper.password.hash(passwordOne) },
-      { email }
-    );
+    const { id } = helper.token.decode(token);
+
+    const user = await User.findOne({
+      id
+    });
+    const isUpdated = await User.update({
+      password: helper.password.hash(passwordOne)
+    });
+
     delete isUpdated.password;
     return isUpdated
       ? res.status(status.OK).json({
-          isUpdated,
           message: "Success! your password has been changed."
         })
       : res
