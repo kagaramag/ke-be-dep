@@ -1,6 +1,6 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Kids", {
+    queryInterface.createTable("Locations", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,28 +17,28 @@ export default {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      gender: {
-        type: Sequelize.ENUM("girl", "boy"),
-        allowNull: true
-      },
-      names: {
+      province: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      age: {
-        type: Sequelize.INTEGER,
+      district: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      class: {
+      sector: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
-      school: {
+      cell: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
-      subject: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
+      village: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      houseNumber: {
+        type: Sequelize.STRING,
         allowNull: true
       },
       createdAt: {
@@ -50,5 +50,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable("Kids")
+  down: queryInterface => queryInterface.dropTable("Locations")
 };

@@ -83,7 +83,6 @@
         );
 
         if (result) {
-          console.log(result);
           if (typeof result === 'object' && result.errors) {
             document.querySelector('#message').innerHTML = `
           <div class="danger text-white radius-2 uppercase large-padding center-align">
@@ -207,7 +206,6 @@
           'json',
           localStorage.token
         );
-        console.log(result);
 
         if (result) {
           if (typeof result === 'object' && result.errors) {

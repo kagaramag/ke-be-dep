@@ -5,7 +5,6 @@ import * as template from "./templates";
 dotenv.config();
 
 export default async (to, action, data) => {
-  console.log("data", data);
   const { SENDGRID_API_KEY, EMAIL_SENDER, NODE_ENV } = process.env;
 
   mailer.setApiKey(SENDGRID_API_KEY);

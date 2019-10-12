@@ -1,8 +1,8 @@
-import 'dotenv/config';
-import { User, UserRole } from '../queries';
-import * as helper from '../helpers';
-import * as validate from '../helpers/validation';
-import status from '../config/status';
+import "dotenv/config";
+import { User, UserRole } from "../queries";
+import * as helper from "../helpers";
+import * as validate from "../helpers/validation";
+import status from "../config/status";
 
 const { CI } = process.env;
 const { appUrl, travis } = helper.urlHelper.frontend;
@@ -21,13 +21,20 @@ export default class AuthLocalController {
     const { email, firstName, lastName } = req.body;
     req.body.password = helper.password.hash(req.body.password);
     const newUser = await User.create(req.body);
-    const errors = newUser.errors ? helper.checkCreateUpdateUserErrors(newUser.errors) : null;
+    const errors = newUser.errors
+      ? helper.checkCreateUpdateUserErrors(newUser.errors)
+      : null;
 
     return errors
       ? res.status(errors.code).json({ errors: errors.errors })
-      : (await helper.sendMail(email, 'signup', { email, firstName, lastName }))
-          && res.status(status.CREATED).json({
-            message: 'Thank you for registering. Please, check your email to activate your account',
+      : (await helper.sendMail(email, "signup", {
+          email,
+          firstName,
+          lastName
+        })) &&
+          res.status(status.CREATED).json({
+            message:
+              "Thank you for registering. Please, check your email to activate your account",
             user: newUser
           });
   }
@@ -44,10 +51,13 @@ export default class AuthLocalController {
     checkUser = await User.findOne({ email });
     const checkUserRole = await UserRole.findOne({ userId: checkUser.id });
     if (Object.keys(checkUser).length > 0) {
-      const comparePassword = helper.password.compare(password, checkUser.password || '');
+      const comparePassword = helper.password.compare(
+        password,
+        checkUser.password || ""
+      );
       if (!comparePassword) {
         return res.status(status.UNAUTHORIZED).json({
-          errors: { credentials: 'The credentials you provided are incorrect' }
+          errors: { credentials: "The credentials you provided are incorrect" }
         });
       }
       const payload = {
@@ -59,7 +69,7 @@ export default class AuthLocalController {
       delete checkUser.password;
       checkUser = { ...checkUser, role: checkUserRole.role };
       return res.status(status.OK).json({
-        message: 'You have logged in successfully',
+        message: "You have logged in successfully",
         user: checkUser,
         token
       });
@@ -76,8 +86,10 @@ export default class AuthLocalController {
     const { id } = req.params;
     const deactivateAccount = await User.update({ isActive: false }, { id });
     return deactivateAccount
-      ? res.status(status.OK).json({ message: 'User account deleted successfully', userId: id })
-      : res.status(status.UNAUTHORIZED).json({ errors: 'Unauthorized access' });
+      ? res
+          .status(status.OK)
+          .json({ message: "User account deleted successfully", userId: id })
+      : res.status(status.UNAUTHORIZED).json({ errors: "Unauthorized access" });
   }
 
   /**
@@ -92,9 +104,11 @@ export default class AuthLocalController {
     delete fetchUser.password;
     return Object.keys(fetchUser).length
       ? res.status(status.OK).json({ user: fetchUser })
-      : res
-        .status(status.NOT_FOUND)
-        .json({ errors: { user: `sorry, user with id "${req.params.id}" not found!!` } });
+      : res.status(status.NOT_FOUND).json({
+          errors: {
+            user: `sorry, user with id "${req.params.id}" not found!!`
+          }
+        });
   }
 
   /**
@@ -114,7 +128,7 @@ export default class AuthLocalController {
       return res.status(code).json(errors);
     }
     if (newUser) {
-      await helper.sendMail(email, 'signup', { email, firstName, lastName });
+      await helper.sendMail(email, "signup", { email, firstName, lastName });
       return res.status(status.CREATED).json({
         message: `activation message sent to ${req.body.email}`
       });
@@ -143,17 +157,19 @@ export default class AuthLocalController {
     const result = await User.findOne({ email }); // check if the email exist
     if (Object.keys(result).length <= 0) {
       return res.status(status.NOT_FOUND).json({
-        errors: 'email not found..'
+        errors: "email not found.."
       });
     }
 
-    await helper.sendMail(email, 'resetPassword', {
+    const tokenizedEmail = await helper.token.generate({ email });
+    await helper.sendMail(email, "resetPassword", {
       email,
       names: `${result.firstName} ${result.lastName}`
     }); // send mail
 
     return res.status(status.OK).json({
-      message: 'Email sent, please check your email'
+      message: "Email sent, please check your email",
+      redirect: tokenizedEmail
     });
   }
 
@@ -167,26 +183,38 @@ export default class AuthLocalController {
     const { passwordOne, passwordTwo } = req.body;
 
     if (passwordOne !== passwordTwo) {
-      return res.status(status.BAD_REQUEST).json({ errors: 'Passwords are not matching' });
+      return res
+        .status(status.BAD_REQUEST)
+        .json({ errors: "Passwords are not matching" });
     }
 
     if (!req.body.passwordOne || !req.body.passwordTwo) {
-      return res.status(status.BAD_REQUEST).json({ errors: 'the password can not be empty' });
+      return res
+        .status(status.BAD_REQUEST)
+        .json({ errors: "the password can not be empty" });
     }
 
-    const isPasswordValid = validate.password(passwordOne, 'required');
-    const isPasswordValidTwo = validate.password(passwordTwo, 'required');
+    const isPasswordValid = validate.password(passwordOne, "required");
+    const isPasswordValidTwo = validate.password(passwordTwo, "required");
 
     if (isPasswordValid.length || isPasswordValidTwo.length) {
-      return res.status(status.BAD_REQUEST).json({ message: isPasswordValid[0] });
+      return res
+        .status(status.BAD_REQUEST)
+        .json({ message: isPasswordValid[0] });
     }
     const { email } = helper.token.decode(token);
-    const isUpdated = await User.update({ password: helper.password.hash(passwordOne) }, { email });
+    const isUpdated = await User.update(
+      { password: helper.password.hash(passwordOne) },
+      { email }
+    );
     delete isUpdated.password;
     return isUpdated
-      ? res
-        .status(status.OK)
-        .json({ isUpdated, message: 'Success! your password has been changed.' })
-      : res.status(status.NOT_MODIFIED).json({ errors: 'Password not updated' });
+      ? res.status(status.OK).json({
+          isUpdated,
+          message: "Success! your password has been changed."
+        })
+      : res
+          .status(status.NOT_MODIFIED)
+          .json({ errors: "Password not updated" });
   }
 }

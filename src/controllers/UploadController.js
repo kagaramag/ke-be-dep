@@ -1,6 +1,6 @@
-import dotenv from 'dotenv';
-import status from '../config/status';
-import { Gallery, Article } from '../queries';
+import dotenv from "dotenv";
+import status from "../config/status";
+import { Gallery, Article } from "../queries";
 
 dotenv.config();
 const { IMAGE_BASE_URL, NODE_ENV } = process.env;
@@ -16,28 +16,24 @@ export default class UploadController {
    */
   static async save(req, res) {
     const image = req.files && req.files[0];
-    return typeof image === 'object' && typeof image !== 'boolean' && NODE_ENV !== 'test'
+    return typeof image === "object" &&
+      typeof image !== "boolean" &&
+      NODE_ENV !== "test"
       ? (await Gallery.save({
-        image: `${image.version}/${image.public_id}.${image.format}`,
-        userId: req.user.id
-      }))
-          && res.status(status.CREATED).json({
+          image: `${image.version}/${image.public_id}.${image.format}`,
+          userId: req.user.id
+        })) &&
+          res.status(status.CREATED).json({
             image: {
               original: `v${image.version}/${image.public_id}.${image.format}`,
-              thumbnail: `${IMAGE_BASE_URL}/w_600/v${image.version}/${image.public_id}.${
-                image.format
-              }`,
-              square: `${IMAGE_BASE_URL}/w_320,ar_1:1,c_fill,g_auto,e_art:hokusai/v${
-                image.version
-              }/${image.public_id}.${image.format}`,
-              circle: `${IMAGE_BASE_URL}/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:262c35/v${
-                image.version
-              }/${image.public_id}.${image.format}`
+              thumbnail: `${IMAGE_BASE_URL}/w_600/v${image.version}/${image.public_id}.${image.format}`,
+              square: `${IMAGE_BASE_URL}/w_320,ar_1:1,c_fill,g_auto,e_art:hokusai/v${image.version}/${image.public_id}.${image.format}`,
+              circle: `${IMAGE_BASE_URL}/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:262c35/v${image.version}/${image.public_id}.${image.format}`
             }
           })
-      : res
-        .status(status.BAD_REQUEST)
-        .json({ errors: { image: 'sorry, you did not provide image to be uploaded' } });
+      : res.status(status.BAD_REQUEST).json({
+          errors: { image: "sorry, you did not provide image to be uploaded" }
+        });
   }
 
   /**
@@ -78,10 +74,12 @@ export default class UploadController {
       req.user.id
     );
     if (message[0] === 1) {
-      return res.status(status.OK).send({ coverUrl: 'CoverUrl has been updated' });
+      return res
+        .status(status.OK)
+        .send({ coverUrl: "CoverUrl has been updated" });
     }
     return res
       .status(status.BAD_REQUEST)
-      .send({ errors: { coverUrl: 'coverUrl not updated, try again' } });
+      .send({ errors: { coverUrl: "coverUrl not updated, try again" } });
   }
 }
