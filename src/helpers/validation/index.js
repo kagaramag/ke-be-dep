@@ -39,5 +39,5 @@ export {
   createTutoring,
   createTutorship,
   createLocation,
-  createTutorDetailsForm
+  createTutorDetailsForm,
 };

@@ -30,6 +30,7 @@ export default class KidsController {
       });
     }
     return res.status(status.CREATED).json({
+      message: `You have registered ${kid.names} successfully.`,
       kid
     });
   }
@@ -48,6 +49,27 @@ export default class KidsController {
       })
       : res.status(status.SERVER_ERROR).json({
         errors: kids.error
+      });
+  }
+
+  /**
+   * @param  {object} req contains server request info
+   * @param  {object} res contains server response
+   * @return {object} return an object containing the kids info
+   */
+  static async updateKid(req, res) {
+    // NB: we don't delete data, we just change their status, and hide them to users
+    const data = {
+      status: 'inactive'
+    };
+    const kid = await Kid.update({ id: req.body.id }, data);
+    return !kid.error && kid.length
+      ? res.status(status.OK).json({
+        info: kid,
+        message: 'You have deleted this kid successfully'
+      })
+      : res.status(status.SERVER_ERROR).json({
+        errors: { error: 'Sorry, you can not delete this kid at this time. try again later' }
       });
   }
 }

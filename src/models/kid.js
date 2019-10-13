@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const Kid = sequelize.define(
-    "Kid",
+    'Kid',
     {
       id: {
         allowNull: false,
@@ -12,19 +12,24 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Users",
-          key: "id"
+          model: 'Users',
+          key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       names: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      birth: {
+      dateOfBirth: {
         type: DataTypes.DATE,
         allowNull: false
+      },
+      status: {
+        type: DataTypes.ENUM('active', 'inactive'),
+        allowNull: false,
+        defaultValue: 'active'
       },
       class: {
         type: DataTypes.STRING,
@@ -43,17 +48,18 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.DATE
       }
     },
-    {}
+    {
+    }
   );
-  Kid.associate = models => {
-    Kid.belongsTo(models.User, { foreignKey: "userId", as: "parent" });
+  Kid.associate = (models) => {
+    Kid.belongsTo(models.User, { foreignKey: 'userId', as: 'parent' });
     Kid.hasOne(models.Tutoring, {
-      foreignKey: "tuteeId",
-      as: "tutoring"
+      foreignKey: 'tuteeId',
+      as: 'tutoring'
     });
     Kid.hasOne(models.Tutoring, {
-      foreignKey: "tuteeId",
-      as: "kid"
+      foreignKey: 'tuteeId',
+      as: 'kid'
     });
   };
   return Kid;

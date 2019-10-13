@@ -66,7 +66,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   });
-  User.associate = models => {
+  User.associate = (models) => {
     User.hasMany(models.Article, {
       foreignKey: 'userId',
       onUpdate: 'CASCADE',

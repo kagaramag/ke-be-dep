@@ -12,6 +12,7 @@ export default async (id, role) => {
       const response = await db.Tutoring.findAll(
         {
           where: { tutorId: id },
+          order: [['id', 'DESC']],
           include: [
             {
               model: db.Kid,
@@ -26,10 +27,7 @@ export default async (id, role) => {
                 }
               ]
             }
-          ],
-          order: [
-            ['id', 'DESC']
-          ],
+          ]
         },
         {
           logging: false
@@ -41,6 +39,7 @@ export default async (id, role) => {
       const response = await db.Kid.findAll(
         {
           where: { userId: id, status: 'active' },
+          order: [['id', 'DESC']],
           include: [
             {
               model: db.Tutoring,
@@ -55,7 +54,6 @@ export default async (id, role) => {
                 }
               ]
             }
-
           ]
         },
         {

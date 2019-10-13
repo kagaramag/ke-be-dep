@@ -9,6 +9,7 @@ export default async (userId) => {
   try {
     const response = await db.Kid.findAll({
       where,
+      order: [['id', 'DESC']],
     });
     return response;
   } catch (error) {
