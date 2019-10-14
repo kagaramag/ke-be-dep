@@ -3,7 +3,7 @@ import validateKids from '../../middlewares/validation/kids';
 import KidsController from '../../controllers/KidsController';
 import verifyToken from '../../middlewares/verifyToken';
 import checkIfKidExist from '../../middlewares/checkIfKidExist';
-import deleteKidPermission from '../../middlewares/deleteKidPermission';
+import updateKidPermission from '../../middlewares/updateKidPermission';
 import asyncHandler from '../../middlewares/asyncHandler';
 
 const kids = Router();
@@ -20,9 +20,9 @@ kids.get(
   asyncHandler(KidsController.getKids)
 );
 kids.patch(
-  '/',
+  '/:id',
   verifyToken,
-  deleteKidPermission,
+  updateKidPermission,
   asyncHandler(KidsController.updateKid)
 );
 

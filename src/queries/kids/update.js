@@ -9,6 +9,8 @@ export default async (where, data) => {
   try {
     const response = await db.Kid.update(data, {
       where,
+      returning: true,
+      plain: true,
       logging: false
     });
     return response;

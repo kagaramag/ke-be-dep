@@ -59,17 +59,15 @@ export default class KidsController {
    */
   static async updateKid(req, res) {
     // NB: we don't delete data, we just change their status, and hide them to users
-    const data = {
-      status: 'inactive'
-    };
-    const kid = await Kid.update({ id: req.body.id }, data);
-    return !kid.error && kid.length
+    const data = Object.keys(req.body) && Object.keys(req.body).length ? req.body : { status: 'inactive' };
+    const response = await Kid.update({ id: req.params.id }, data);
+    return !response.error && response && response[1]
       ? res.status(status.OK).json({
-        info: kid,
-        message: 'You have deleted this kid successfully'
+        kid: response[1].dataValues.status === 'active' ? response[1].dataValues : {},
+        message: `You have successfully ${response[1].dataValues.status === 'active' ? `edited the information of ${response[1].dataValues.names}` : `deleted ${response[1].dataValues.names}`}`
       })
       : res.status(status.SERVER_ERROR).json({
-        errors: { error: 'Sorry, you can not delete this kid at this time. try again later' }
+        errors: { error: 'Sorry, you can\'t perform this action at this time. try again later' }
       });
   }
 }

@@ -5,7 +5,7 @@ import db from '../../models';
  * @returns {object} Object representing the response returned
  */
 export default async (where) => {
-  where = { ...where, status: 'active' };
+  where = { ...where };
   try {
     const response = await db.Kid.findOne({
       where,
