@@ -1,10 +1,5 @@
 import status from "../config/status";
-import * as helpers from "../helpers";
-import { Legal, User } from "../queries";
-import dotenv from "dotenv";
-
-dotenv.config();
-const { IMAGE_BASE_URL } = process.env;
+import { Legal } from "../queries";
 
 export default class LegalController {
   static async upload(req, res) {
@@ -26,6 +21,17 @@ export default class LegalController {
 
     return res.status(status.CREATED).send({
       legalForm
+    });
+  }
+
+  static async find(req, res) {
+    const { userId } = req.params;
+    console.log(userId);
+    const legalDoc = await Legal.getOne({
+      userId
+    });
+    return res.status(status.ACCESS_DENIED).send({
+      legalDoc
     });
   }
 }
