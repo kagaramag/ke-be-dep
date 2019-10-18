@@ -17,6 +17,7 @@ import kids from "./kids";
 import tutoring from "./tutoring";
 import tutorship from "./tutorship";
 import location from "./location";
+import legal from "./legal";
 
 const router = express.Router();
 
@@ -38,5 +39,6 @@ router.use("/kids", kids);
 router.use("/tutoring", tutoring);
 router.use("/tutorship", tutorship);
 router.use("/location", location);
+router.use("/legal", legal);
 
 export default router;

@@ -72,6 +72,11 @@ export default (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
       onDelete: "CASCADE"
     });
+    User.hasMany(models.Legal, {
+      foreignKey: "userId",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE"
+    });
     User.hasMany(models.Comment, {
       foreignKey: "userId",
       onUpdate: "CASCADE",
