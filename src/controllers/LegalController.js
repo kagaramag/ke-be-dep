@@ -24,17 +24,18 @@ export default class LegalController {
     });
   }
 
-  static async find(req, res) {
+  static async finduser(req, res) {
     const { username } = req.params;
-    const user = await User.findOne({ username });
+    console.log(req.params);
+    const user = await User.findOne({
+      username
+    });
     if (!user.errors && !Object.keys(user).length) {
       return res.status(status.NOT_FOUND).json({
         message: `This user with the username ${username} does not exist`
       });
     }
-    const legalDoc = await Legal.getOne({
-      username
-    });
+    const legalDoc = await Legal.findOne(user.id);
     return res
       .status(status.OK)
       .json({ message: `${username}'s legal documents `, legalDoc });

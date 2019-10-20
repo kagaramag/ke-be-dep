@@ -15,11 +15,6 @@ legal.post(
   asyncHandler(LegalController.upload)
 );
 
-legal.get(
-  "/:userId",
-  verifyToken,
-  verifyAdmin,
-  asyncHandler(LegalController.find)
-);
+legal.get("/:username", verifyToken, asyncHandler(LegalController.finduser));
 
 export default legal;
