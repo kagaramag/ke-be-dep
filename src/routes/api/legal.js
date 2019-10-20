@@ -14,13 +14,13 @@ legal.post(
   multerUploads.array("doc", 4),
   asyncHandler(LegalController.upload)
 );
-legal.get("/", verifyToken, asyncHandler(LegalController.finddocs));
+legal.get("/", verifyToken, asyncHandler(LegalController.findBySelf));
 
 legal.get(
   "/:username",
   verifyToken,
   verifyAdmin,
-  asyncHandler(LegalController.findLegal)
+  asyncHandler(LegalController.findByAdmin)
 );
 
 export default legal;

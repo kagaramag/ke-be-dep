@@ -24,7 +24,7 @@ export default class LegalController {
     });
   }
 
-  static async finddocs(req, res) {
+  static async findBySelf(req, res) {
     const legalDoc = await Legal.findOne(req.user.id);
     if (legalDoc.userId != req.user.id) {
       return res.status(status.UNAUTHORIZED).json({
@@ -36,7 +36,7 @@ export default class LegalController {
       .json({ message: `Here's your legal documents `, legalDoc });
   }
 
-  static async findLegal(req, res) {
+  static async findByAdmin(req, res) {
     const { username } = req.params;
     const user = await User.findOne({
       username
