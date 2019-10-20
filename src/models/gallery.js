@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const Gallery = sequelize.define(
-    'Gallery',
+    "Gallery",
     {
       id: {
         allowNull: false,
@@ -12,16 +12,17 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: "Users",
+          key: "id"
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
+
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
@@ -33,8 +34,8 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Gallery.associate = (models) => {
-    Gallery.belongsTo(models.User, { foreignKey: 'userId' });
+  Gallery.associate = models => {
+    Gallery.belongsTo(models.User, { foreignKey: "userId" });
   };
   return Gallery;
 };
