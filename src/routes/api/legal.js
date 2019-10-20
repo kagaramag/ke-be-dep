@@ -12,7 +12,7 @@ legal.post(
   verifyToken,
   validateLegal.create,
   multerUploads.array("doc", 4),
-  asyncHandler(LegalController.create)
+  asyncHandler(LegalController.upload)
 );
 
 legal.get(

@@ -5,10 +5,15 @@
  * @param {object} userId User to identify the documents
  * @returns {object} Object representing the response returned
  */
-export default async userId => {
+export default async username => {
   let response = [];
+  const user = await db.User.findOne({
+    where: { username }
+  });
   response = await db.Legal.find({
-    where: userId,
+    where: {
+      userId: user.id
+    },
     logging: false
   });
   return response;
