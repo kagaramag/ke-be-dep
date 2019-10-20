@@ -1,5 +1,5 @@
 import status from "../config/status";
-import { Legal } from "../queries";
+import { Legal, User } from "../queries";
 
 export default class LegalController {
   static async upload(req, res) {
@@ -24,14 +24,31 @@ export default class LegalController {
     });
   }
 
-  static async find(req, res) {
-    const { userId } = req.params;
-    console.log(userId);
-    const legalDoc = await Legal.getOne({
-      userId
+  static async findBySelf(req, res) {
+    const legalDoc = await Legal.findOne(req.user.id);
+    if (legalDoc.userId != req.user.id) {
+      return res.status(status.UNAUTHORIZED).json({
+        message: `Not authorized`
+      });
+    }
+    return res
+      .status(status.OK)
+      .json({ message: `Here's your legal documents `, legalDoc });
+  }
+
+  static async findByAdmin(req, res) {
+    const { username } = req.params;
+    const user = await User.findOne({
+      username
     });
-    return res.status(status.ACCESS_DENIED).send({
-      legalDoc
-    });
+    if (!user.errors && !Object.keys(user).length) {
+      return res.status(status.NOT_FOUND).json({
+        message: `This user with the username ${username} does not exist`
+      });
+    }
+    const legalDoc = await Legal.findOne(user.id);
+    return res
+      .status(status.OK)
+      .json({ message: `${username}'s legal documents `, legalDoc });
   }
 }

@@ -1,4 +1,4 @@
 import create from "./create";
-import getOne from "./getOne";
+import findOne from "./getOne";
 
-export { create, getOne };
+export { create, findOne };

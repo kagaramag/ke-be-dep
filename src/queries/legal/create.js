@@ -5,6 +5,13 @@ import db from "../../models";
  * @returns {object} Object representing the response returned
  */
 export default async data => {
+  // user should have one entry in database
+  //before create, clear out their document
+  await db.Legal.destroy({
+    where: {
+      userId: data.userId
+    }
+  });
   const response = await db.Legal.create(data, { logging: false });
   return response;
 };
