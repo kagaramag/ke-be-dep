@@ -24,7 +24,19 @@ export default class LegalController {
     });
   }
 
-  static async finduser(req, res) {
+  static async finddocs(req, res) {
+    const legalDoc = await Legal.findOne(req.user.id);
+    if (legalDoc.userId != req.user.id) {
+      return res.status(status.UNAUTHORIZED).json({
+        message: `Not authorized`
+      });
+    }
+    return res
+      .status(status.OK)
+      .json({ message: `Here's your legal documents `, legalDoc });
+  }
+
+  static async findLegal(req, res) {
     const { username } = req.params;
     const user = await User.findOne({
       username
@@ -35,16 +47,8 @@ export default class LegalController {
       });
     }
     const legalDoc = await Legal.findOne(user.id);
-
-    if (legalDoc.userId != req.user.id) {
-      return res.status(status.UNAUTHORIZED).json({
-        message: `Not authorized`
-      });
-    }
     return res
       .status(status.OK)
       .json({ message: `${username}'s legal documents `, legalDoc });
   }
-
-  static async changeStatus(req, res) {}
 }
