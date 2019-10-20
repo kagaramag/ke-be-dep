@@ -97,6 +97,11 @@ export default (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
+    User.hasOne(models.Mail, {
+      foreignKey: 'receiverId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
     User.hasOne(models.UserRole, {
       foreignKey: 'userId',
       onUpdate: 'CASCADE',

@@ -1,12 +1,12 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Locations', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Mails', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    userId: {
+    receiverId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -16,29 +16,13 @@ export default {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    province: {
+    subject: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    district: {
-      type: Sequelize.STRING,
+    body: {
+      type: Sequelize.TEXT,
       allowNull: false
-    },
-    sector: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    cell: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    village: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    houseNumber: {
-      type: Sequelize.STRING,
-      allowNull: true
     },
     createdAt: {
       allowNull: false,
@@ -49,5 +33,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Locations')
+  down: queryInterface => queryInterface.dropTable('Mails')
 };

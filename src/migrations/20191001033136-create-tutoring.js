@@ -23,7 +23,7 @@ export default {
       }
     },
     status: {
-      type: Sequelize.ENUM('requested', 'accepted', 'rejected', 'terminated'),
+      type: Sequelize.ENUM('requested', 'accepted', 'request_cancel', 'rejected', 'terminated'),
       allowNull: false,
       defaultValue: 'requested'
     },

@@ -1,7 +1,15 @@
 import status from '../config/status';
 import { Legal, User, TutorDetails } from '../queries';
 
+/**
+ * A class to handle legal document of a tutor
+ */
 export default class LegalController {
+  /**
+   * @param  {object} req contains legal info
+   * @param  {object} res contains server response
+   * @return {object} return an object containing the kids info
+   */
   static async upload(req, res) {
     try {
       const { id } = req.user;
@@ -33,9 +41,14 @@ export default class LegalController {
     }
   }
 
+  /**
+   * @param  {object} req contains legal info
+   * @param  {object} res contains server response
+   * @return {object} return an object containing the kids info
+   */
   static async findBySelf(req, res) {
     const legalDoc = await Legal.findOne(req.user.id);
-    if (legalDoc.userId != req.user.id) {
+    if (legalDoc.userId !== req.user.id) {
       return res.status(status.UNAUTHORIZED).json({
         message: req.polyglot.t('noAccess')
       });
@@ -45,6 +58,11 @@ export default class LegalController {
       .json({ message: req.polyglot.t('legal'), legalDoc });
   }
 
+  /**
+   * @param  {object} req contains legal info
+   * @param  {object} res contains server response
+   * @return {object} return an object containing the kids info
+   */
   static async findByAdmin(req, res) {
     const { username } = req.params;
     const user = await User.findOne({

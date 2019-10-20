@@ -9,6 +9,9 @@ export default async (condition = {}) => {
     const user = Object.keys(condition).length
       ? await db.User.findOne({
         where: condition,
+        attributes: {
+          exclude: ['bio', 'accountProvider', 'accountProviderUserId']
+        },
         logging: false
       })
       : null;

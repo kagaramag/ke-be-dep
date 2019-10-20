@@ -9,6 +9,16 @@ export default async (where) => {
   try {
     const response = await db.Kid.findOne({
       where,
+      include: [
+        {
+          model: db.User,
+          as: 'parent',
+          attributes: {
+            exclude: ['password', 'bio', 'accountProvider', 'accountProviderUserId']
+          }
+        }
+      ],
+      plain: true,
       logging: false
     });
     return response;

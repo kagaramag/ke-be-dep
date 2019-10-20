@@ -43,6 +43,12 @@ tutoring.put(
   asyncHandler(TutoringController.tutoringAction)
 );
 tutoring.put(
+  '/request_cancel',
+  verifyToken,
+  validateTutoringAction,
+  asyncHandler(TutoringController.tutoringAction)
+);
+tutoring.put(
   '/cancel',
   verifyToken,
   validateTutoringAction,

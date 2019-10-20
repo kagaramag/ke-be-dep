@@ -91,7 +91,6 @@ export default (sequelize, DataTypes) => {
         afterUpdate: async (article) => {
           const currentData = article.get();
           const previousData = article.previous();
-
           if (previousData && previousData.status) {
             if (previousData.status === 'draft' && currentData.status === 'published') {
               eventEmitter.emit('publishArticle', currentData.userId, currentData.slug);

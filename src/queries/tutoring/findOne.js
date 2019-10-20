@@ -10,6 +10,13 @@ export default async (where) => {
       where,
       include: [
         {
+          model: db.User,
+          as: 'tutor',
+          attributes: {
+            exclude: ['password', 'isActive', 'accountProvider', 'accountProviderUserId']
+          }
+        },
+        {
           model: db.Kid,
           as: 'kid',
           include: [
