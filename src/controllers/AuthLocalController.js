@@ -57,7 +57,7 @@ export default class AuthLocalController {
       );
       if (!comparePassword) {
         return res.status(status.UNAUTHORIZED).json({
-          errors: { credentials: 'The credentials you provided are incorrect' }
+          errors: { credentials: req.polyglot.t('incorrectCredentials') }
         });
       }
       const payload = {

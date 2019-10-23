@@ -11,6 +11,7 @@ export const messages = {
   en: {
     // Error messages
     usernameNotExists: 'This user with the username does not exist',
+    incorrectCredentials: 'The credentials you provided are incorrect',
 
     // Success messages
     loginSuccessful: 'You have logged in successfully',
@@ -20,6 +21,7 @@ export const messages = {
   fr: {
     // Error messages
     usernameNotExists: 'Nta konti ikoresha iri zina ibashije kuboneka',
+    incorrectCredentials: 'Ukoresheje ibikuranga bitari byo',
 
     // Success messages
     loginSuccessful: 'Ubashije kwinjira neza',
