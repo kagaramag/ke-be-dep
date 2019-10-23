@@ -13,6 +13,7 @@ import * as Kid from "./kids";
 import * as Tutoring from "./tutoring";
 import * as Tutorship from "./tutorship";
 import * as Location from "./location";
+import * as Legal from "./legal";
 
 export {
   User,
@@ -30,5 +31,6 @@ export {
   Kid,
   Tutoring,
   Tutorship,
-  Location
+  Location,
+  Legal
 };

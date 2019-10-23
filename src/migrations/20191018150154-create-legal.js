@@ -1,6 +1,6 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Galleries", {
+    queryInterface.createTable("Legals", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,9 +17,30 @@ export default {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      image: {
+      status: {
+        type: Sequelize.ENUM("pending", "approved", "rejected"),
+        allowNull: true,
+        defaultValue: "pending"
+      },
+      language: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      experience: {
         type: Sequelize.STRING,
         allowNull: true
+      },
+      bulletin: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      passport: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      cv: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -30,5 +51,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable("Galleries")
+  down: queryInterface => queryInterface.dropTable("Legals")
 };

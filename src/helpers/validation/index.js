@@ -17,6 +17,7 @@ import createKids from "./createKids";
 import createTutoring from "./createTutoring";
 import createTutorship from "./createTutorship";
 import createLocation from "./createLocation";
+import createLegalForm from "./createLegalForm";
 
 export {
   email,
@@ -37,5 +38,6 @@ export {
   createKids,
   createTutoring,
   createTutorship,
-  createLocation
+  createLocation,
+  createLegalForm
 };
