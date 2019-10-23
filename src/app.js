@@ -13,6 +13,11 @@ import routes from './routes';
 import * as swaggerDocument from '../swagger.json';
 import './helpers/eventListener';
 
+// this middleware helps to set language in headers
+import createLocale from 'express-locale';
+
+// Polyglot middleware
+import { runPolyglot } from './middlewares/checklang';
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -37,6 +42,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+/*
+  accept-language: fr_MX or en_MX
+*/
+app.use(
+  createLocale({
+    priority: ['accept-language', 'default'],
+    default: 'en_US'
+  })
+);
+
+app.use(runPolyglot);
 
 app.use((req, res, next) => {
   req.io = io;
@@ -46,7 +62,11 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, '../templates')));
 app.use('/mockups', express.static(path.join(__dirname, '../templates/html')));
 
-app.use('/api/v1/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  '/api/v1/documentation',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 app.use('/api/v1/', routes);
 
 // catch 404 and forward to error handler
