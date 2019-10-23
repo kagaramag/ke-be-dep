@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
-import mailer from "@sendgrid/mail";
-import * as template from "./templates";
+import dotenv from 'dotenv';
+import mailer from '@sendgrid/mail';
+import * as template from './templates';
 
 dotenv.config();
 
@@ -11,16 +11,16 @@ export default async (to, action, data) => {
 
   const notifier = template[action](data);
   const mottos = [
-    "Put your kids on the head of their peers",
-    "Connecting student with teacher"
+    'Put your kids ahead of their peers',
+    'Connecting student with teacher'
   ];
   const motto = mottos[Math.floor(Math.random() * mottos.length)];
   const message = {
     to,
     from: EMAIL_SENDER,
     subject: notifier.subject,
-    fromname: "Nivelo Lab",
-    text: "Nivelo",
+    fromname: 'Nivelo Lab',
+    text: 'Nivelo',
     html: `<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 
     <!--HEADER -->
@@ -466,7 +466,7 @@ export default async (to, action, data) => {
                                                                 <br>
                                                                 <div style="text-align:center;color:#989898;">
                                                                     ${notifier.notice ||
-                                                                      ""}
+                                                                      ''}
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -490,5 +490,5 @@ export default async (to, action, data) => {
     </tbody>
 </table>`
   };
-  return NODE_ENV === "test" ? true : mailer.send(message);
+  return NODE_ENV === 'test' ? true : mailer.send(message);
 };
