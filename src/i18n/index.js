@@ -32,6 +32,7 @@ export const messages = {
     parentError: 'Sorry, you have to be a parent to perform this action',
 
     // Success messages
+    legal: 'Legal documents',
     deleteChoice: 'You have successfully removed your highlight',
 
     choosenHighlight: 'You have highlighted this text',
@@ -75,6 +76,8 @@ export const messages = {
     choiceNotFound: 'Iri jambo ntiribonetse',
     parentError: 'Umubyeyi wenyine niwe wemerewe gukora kino gikorwa',
     // Success messages
+    legal: 'Ibyangombwa byose',
+
     deleteChoice: 'Ijambo wari wahisemo rirasibwe',
     choosenHighlight: 'Uhisemo iri jambo',
 

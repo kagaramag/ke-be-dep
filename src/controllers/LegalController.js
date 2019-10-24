@@ -1,5 +1,5 @@
-import status from "../config/status";
-import { Legal, User } from "../queries";
+import status from '../config/status';
+import { Legal, User } from '../queries';
 
 export default class LegalController {
   static async upload(req, res) {
@@ -12,7 +12,7 @@ export default class LegalController {
       userId: id,
       experience: req.body.experience,
       language: req.body.language,
-      status: "pending",
+      status: 'pending',
       bulletin: `${bulletin.version}/${bulletin.public_id}.${bulletin.format}`,
       diploma: `${diploma.version}/${diploma.public_id}.${diploma.format}`,
       passport: `${passport.version}/${passport.public_id}.${passport.format}`,
@@ -28,12 +28,12 @@ export default class LegalController {
     const legalDoc = await Legal.findOne(req.user.id);
     if (legalDoc.userId != req.user.id) {
       return res.status(status.UNAUTHORIZED).json({
-        message: `Not authorized`
+        message: req.polyglot.t('noAccess')
       });
     }
     return res
       .status(status.OK)
-      .json({ message: `Here's your legal documents `, legalDoc });
+      .json({ message: req.polyglot.t('legal'), legalDoc });
   }
 
   static async findByAdmin(req, res) {
@@ -43,7 +43,7 @@ export default class LegalController {
     });
     if (!user.errors && !Object.keys(user).length) {
       return res.status(status.NOT_FOUND).json({
-        message: `This user with the username ${username} does not exist`
+        message: req.polyglot.t('usernameNotExists')
       });
     }
     const legalDoc = await Legal.findOne(user.id);
