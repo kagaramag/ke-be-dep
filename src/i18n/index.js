@@ -29,6 +29,7 @@ export const messages = {
       'Sorry the length of your highlighted text does not match with start and end index',
     noChoice: 'You have no highlights',
     choiceNotFound: 'Sorry, this highlight does not exist',
+    parentError: 'Sorry, you have to be a parent to perform this action',
 
     // Success messages
     deleteChoice: 'You have successfully removed your highlight',
@@ -72,6 +73,7 @@ export const messages = {
     highlightError: 'ntibibashije gukunda',
     noChoice: 'Nta jambo wahisemo',
     choiceNotFound: 'Iri jambo ntiribonetse',
+    parentError: 'Umubyeyi wenyine niwe wemerewe gukora kino gikorwa',
     // Success messages
     deleteChoice: 'Ijambo wari wahisemo rirasibwe',
     choosenHighlight: 'Uhisemo iri jambo',
