@@ -63,7 +63,10 @@ export const messages = {
     readingstat: 'Reading Stats fetched',
     report: 'Report created successfully',
     allReports: 'fetched all reports successfully',
-    deleteReport: 'Report deleted Successfully'
+    deleteReport: 'Report deleted Successfully',
+    tutorRequest:
+      'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
+    tutorSuccess: `You have successfully ${action} this action`
   },
 
   fr: {
@@ -123,6 +126,9 @@ export const messages = {
     readingstat: 'Ibijyanye no gusoma',
     report: 'Raporo irakozwe',
     allReports: 'Raporo zose',
-    deleteReport: 'Raporo irasibwe'
+    deleteReport: 'Raporo irasibwe',
+    tutorRequest:
+      "Umaze gusaba gukorana n'uyu mwarimu, mutegereze ubasabe bwanyu bwemezwe",
+    tutorSuccess: 'bikozwe neza'
   }
 };
