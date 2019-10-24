@@ -60,7 +60,10 @@ export const messages = {
     emailSent: 'Email sent, please check your email',
     thanks: 'Thank you for rating this article',
     updated: 'Your article rating has been updated',
-    readingstat: 'Reading Stats fetched'
+    readingstat: 'Reading Stats fetched',
+    report: 'Report created successfully',
+    allReports: 'fetched all reports successfully',
+    deleteReport: 'Report deleted Successfully'
   },
 
   fr: {
@@ -117,6 +120,9 @@ export const messages = {
     passChanged: "Byizaaa! ijambo ry'ibanga ryawe ryahinduwe.",
     thanks: 'Murakoze gutanga igitekerezo',
     updated: 'Murakoze igitekerezo cyanyu cyahinduwe',
-    readingstat: 'Ibijyanye no gusoma'
+    readingstat: 'Ibijyanye no gusoma',
+    report: 'Raporo irakozwe',
+    allReports: 'Raporo zose',
+    deleteReport: 'Raporo irasibwe'
   }
 };
