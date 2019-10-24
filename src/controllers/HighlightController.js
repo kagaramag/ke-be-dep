@@ -19,7 +19,7 @@ export default class Highlights {
     const indexesLength = stopIndex - startIndex;
     if (contentLength !== indexesLength) {
       return res.status(status.BAD_REQUEST).json({
-        message: 'Sorry the length of your highlighted text does not match with start and end index'
+        message: req.polyglot.t('highlightError')
       });
     }
     const created = await findOrCreate({
@@ -32,9 +32,13 @@ export default class Highlights {
       anchorKey
     });
     return (
-      (created.errors
-        && res.status(status.SERVER_ERROR).json({ message: 'Oops, something went wrong' }))
-      || res.status(status.CREATED).json({ message: 'You have highlighted this text', created })
+      (created.errors &&
+        res
+          .status(status.SERVER_ERROR)
+          .json({ message: req.polyglot.t('serverError') })) ||
+      res
+        .status(status.CREATED)
+        .json({ message: 'You have highlighted this text', created })
     );
   }
 
@@ -52,11 +56,11 @@ export default class Highlights {
     });
 
     return (
-      (highlights.length === 0
-        && res.status(status.NOT_FOUND).json({
+      (highlights.length === 0 &&
+        res.status(status.NOT_FOUND).json({
           message: 'You have no highlights'
-        }))
-      || res.status(status.OK).json({
+        })) ||
+      res.status(status.OK).json({
         highlights
       })
     );
@@ -74,11 +78,11 @@ export default class Highlights {
     const highlight = await deleteHighlight({ articleSlug, id });
 
     return (
-      (!highlight
-        && res.status(status.NOT_FOUND).json({
+      (!highlight &&
+        res.status(status.NOT_FOUND).json({
           message: 'Sorry, this highlight does not exist'
-        }))
-      || res.status(status.OK).json({
+        })) ||
+      res.status(status.OK).json({
         message: 'You have successfully removed your highlight',
         highlightId: id
       })

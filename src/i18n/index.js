@@ -25,8 +25,15 @@ export const messages = {
     notdeleteChat: 'chat not deleted',
     idNotFound: 'the provided chat ID is not valid, it should be an integer',
     commentNotFound: 'Comment is not in history',
+    highlightError:
+      'Sorry the length of your highlighted text does not match with start and end index',
+    noChoice: 'You have no highlights',
+    choiceNotFound: 'Sorry, this highlight does not exist',
 
     // Success messages
+    deleteChoice: 'You have successfully removed your highlight',
+
+    choosenHighlight: 'You have highlighted this text',
     messageSent: 'message successfully sent',
     deleteChat: 'chat successfully deleted',
     commentSuccess: 'Comment successfully created',
@@ -35,7 +42,7 @@ export const messages = {
     commentEdit: 'Comment edited successfully',
     allComments: 'All previous comments',
     removeComment: 'Comment removed from history successfully',
-    commentLike: 'Igitekerezo uragikunze',
+    commentLike: 'You liked the comment',
 
     signupSuccessful:
       'Thank you for registering. Please, check your email to activate your account',
@@ -62,9 +69,15 @@ export const messages = {
     serverError: 'Reba ko ufite internet ikora neza',
     idNotFound: 'ubutumwa ushaka gusiba ntibubaho',
     commentNotFound: 'igitekerezo ntikibashije kuboneka',
+    highlightError: 'ntibibashije gukunda',
+    noChoice: 'Nta jambo wahisemo',
+    choiceNotFound: 'Iri jambo ntiribonetse',
     // Success messages
+    deleteChoice: 'Ijambo wari wahisemo rirasibwe',
+    choosenHighlight: 'Uhisemo iri jambo',
 
-    commentLike: 'You liked the comment',
+    commentLike: 'Igitekerezo uragikunze',
+
     removeComment: 'igitekerezo cyakuwe mubindi',
     allComments: 'ibiganiro byose',
     commentEdit: 'igitekerezo cyahinduwe',
