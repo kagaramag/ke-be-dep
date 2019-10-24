@@ -49,6 +49,6 @@ export default class LegalController {
     const legalDoc = await Legal.findOne(user.id);
     return res
       .status(status.OK)
-      .json({ message: `${username}'s legal documents `, legalDoc });
+      .json({ message: req.polyglot.t('legal'), legalDoc });
   }
 }

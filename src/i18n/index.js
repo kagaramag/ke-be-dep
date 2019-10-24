@@ -30,6 +30,8 @@ export const messages = {
     noChoice: 'You have no highlights',
     choiceNotFound: 'Sorry, this highlight does not exist',
     parentError: 'Sorry, you have to be a parent to perform this action',
+    configSet: 'you already have set configurations',
+    configNot: "you haven't set configuration",
 
     // Success messages
     legal: 'Legal documents',
@@ -69,12 +71,17 @@ export const messages = {
 
     invalidAccount: 'Konti yawe ntiremezwa',
     serverError: 'Reba ko ufite internet ikora neza',
-    idNotFound: 'ubutumwa ushaka gusiba ntibubaho',
+    idNotFound: 'ubutumwa ushaka ntibubaho',
     commentNotFound: 'igitekerezo ntikibashije kuboneka',
     highlightError: 'ntibibashije gukunda',
     noChoice: 'Nta jambo wahisemo',
     choiceNotFound: 'Iri jambo ntiribonetse',
     parentError: 'Umubyeyi wenyine niwe wemerewe gukora kino gikorwa',
+
+    configSet: 'Ibi byari byakozwe',
+
+    configNot: 'ntabwo wabihisemo',
+
     // Success messages
     legal: 'Ibyangombwa byose',
 

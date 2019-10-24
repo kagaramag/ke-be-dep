@@ -38,7 +38,7 @@ export default class Highlights {
           .json({ message: req.polyglot.t('serverError') })) ||
       res
         .status(status.CREATED)
-        .json({ message: 'You have highlighted this text', created })
+        .json({ message: req.polyglot.t('choosenHighlight'), created })
     );
   }
 
@@ -58,7 +58,7 @@ export default class Highlights {
     return (
       (highlights.length === 0 &&
         res.status(status.NOT_FOUND).json({
-          message: 'You have no highlights'
+          message: req.polyglot.t('noChoice')
         })) ||
       res.status(status.OK).json({
         highlights
@@ -80,10 +80,10 @@ export default class Highlights {
     return (
       (!highlight &&
         res.status(status.NOT_FOUND).json({
-          message: 'Sorry, this highlight does not exist'
+          message: req.polyglot.t('choiceNotFound')
         })) ||
       res.status(status.OK).json({
-        message: 'You have successfully removed your highlight',
+        message: req.polyglot.t('deleteChoice'),
         highlightId: id
       })
     );
