@@ -14,7 +14,7 @@ export default class TutoringController {
   static async create(req, res) {
     const tutoring = await Tutoring.create({
       tuteeId: req.body.tuteeId,
-      tutorId: req.body.tutorId,
+      tutorId: req.body.tutorId
     });
     if (tutoring.errors) {
       res.status(status.SERVER_ERROR).json({
@@ -22,9 +22,8 @@ export default class TutoringController {
       });
     }
     return res.status(status.CREATED).json({
-      message: 'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
-      tutoring,
-
+      message: req.polyglot.t('tutorRequest'),
+      tutoring
     });
   }
 
@@ -34,14 +33,17 @@ export default class TutoringController {
    * @return {object} return an object containing the tutoring info
    */
   static async getTutoring(req, res) {
-    const tutoring = await Tutoring.findAll(req.user.id || null, req.user.role || null);
+    const tutoring = await Tutoring.findAll(
+      req.user.id || null,
+      req.user.role || null
+    );
     return !tutoring.error
       ? res.status(status.OK).json({
-        tutoring,
-      })
+          tutoring
+        })
       : res.status(status.SERVER_ERROR).json({
-        errors: tutoring.error
-      });
+          errors: tutoring.error
+        });
   }
 
   /**
@@ -53,11 +55,11 @@ export default class TutoringController {
     const tutoring = await Tutoring.findOne({ id: req.params.id });
     return !tutoring.error
       ? res.status(status.OK).json({
-        tutoring: tutoring.dataValues,
-      })
+          tutoring: tutoring.dataValues
+        })
       : res.status(status.SERVER_ERROR).json({
-        errors: tutoring.error
-      });
+          errors: tutoring.error
+        });
   }
 
   /**
@@ -76,15 +78,17 @@ export default class TutoringController {
       action = `${action}ed`;
     }
     const tutoring = await Tutoring.action(
-      req.user.role === 'tutor' ? {
-        tutorId: req.user.id,
-        tuteeId: req.body.tuteeId,
-        action
-      } : {
-        tuteeId: req.body.tuteeId,
-        tutorId: req.body.tutorId,
-        action
-      }
+      req.user.role === 'tutor'
+        ? {
+            tutorId: req.user.id,
+            tuteeId: req.body.tuteeId,
+            action
+          }
+        : {
+            tuteeId: req.body.tuteeId,
+            tutorId: req.body.tutorId,
+            action
+          }
     );
 
     if (tutoring.errors) {
@@ -93,7 +97,7 @@ export default class TutoringController {
       });
     }
     return res.status(status.OK).json({
-      message: `You have successfully ${action} this action`,
+      message: req.polyglot.t('tutorSuccess')
     });
   }
 }

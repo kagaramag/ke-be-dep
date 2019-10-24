@@ -14,7 +14,7 @@ export default class ChatController {
     if (typeof req.body.message !== 'string' || !req.body.message) {
       return res
         .status(status.BAD_REQUEST)
-        .json({ errors: { message: 'the message should be a string and should not be empty' } });
+        .json({ errors: { message: req.polyglot.t('messageError') } });
     }
 
     const savedChat = await Chat.save(req.user.id, req.body.message);
@@ -22,18 +22,21 @@ export default class ChatController {
       if (savedChat.errors.name === 'SequelizeForeignKeyConstraintError') {
         return res
           .status(status.UNAUTHORIZED)
-          .json({ errors: { account: 'your account is not valid' } });
+          .json({ errors: { account: req.polyglot.t('invalidAccount') } });
       }
-      return res.status(status.SERVER_ERROR).json({ errors: 'Oops, something went wrong' });
+      return res
+        .status(status.SERVER_ERROR)
+        .json({ errors: req.polyglot.t('serverError') });
     }
 
     const findUser = await User.findOne({ id: req.user.id });
     delete findUser.password;
 
     req.io.emit('message', { ...savedChat, user: findUser });
-    return res
-      .status(status.OK)
-      .json({ message: 'message successfully sent', chat: { ...savedChat, user: findUser } });
+    return res.status(status.OK).json({
+      message: req.polyglot.t('messageSent'),
+      chat: { ...savedChat, user: findUser }
+    });
   }
 
   /**
@@ -44,10 +47,12 @@ export default class ChatController {
   static async getAll(req, res) {
     let chats = [];
     const { offset, limit } = req.query;
-    const savedChats = limit ? await Chat.getAll(offset, limit) : await Chat.getAll(offset);
+    const savedChats = limit
+      ? await Chat.getAll(offset, limit)
+      : await Chat.getAll(offset);
 
     if (!savedChats.errors) {
-      savedChats.forEach((chat) => {
+      savedChats.forEach(chat => {
         const user = chat.get().User.get();
         delete chat.dataValues.User;
         chats = [...chats, { ...chat.get(), user }];
@@ -56,8 +61,8 @@ export default class ChatController {
 
     return savedChats.errors
       ? res
-        .status(status.SERVER_ERROR)
-        .json({ errors: 'Oops, something went wrong, please try again' })
+          .status(status.SERVER_ERROR)
+          .json({ errors: req.polyglot.t('serverError') })
       : res.status(status.OK).json({ chats });
   }
 
@@ -67,22 +72,27 @@ export default class ChatController {
    * @returns {object} Object representing the response returned
    */
   static async delete(req, res) {
-    const removedChat = req.user.role === 'normal'
-      ? await Chat.remove(req.params.chatId, req.user.id)
-      : await Chat.remove(req.params.chatId);
+    const removedChat =
+      req.user.role === 'normal'
+        ? await Chat.remove(req.params.chatId, req.user.id)
+        : await Chat.remove(req.params.chatId);
 
     if (removedChat.errors) {
       return removedChat.errors.name === 'SequelizeDatabaseError'
         ? res.status(status.BAD_REQUEST).json({
-          errors: { chat: 'the provided chat ID is not valid, it should be an integer' }
-        })
+            errors: {
+              chat: req.polyglot.t('idNotFound')
+            }
+          })
         : res.status(status.SERVER_ERROR).json({
-          errors: 'Oops, something went wrong, please try again'
-        });
+            errors: req.polyglot.t('serverError')
+          });
     }
 
     return removedChat
-      ? res.status(status.OK).json({ message: 'chat successfully deleted' })
-      : res.status(status.NOT_FOUND).json({ errors: { chat: 'chat not deleted' } });
+      ? res.status(status.OK).json({ message: req.polyglot.t('deleteChat') })
+      : res
+          .status(status.NOT_FOUND)
+          .json({ errors: { chat: req.polyglot.t('notdeleteChat') } });
   }
 }

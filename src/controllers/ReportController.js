@@ -22,7 +22,7 @@ export default class ReportController {
       type
     });
     res.status(status.CREATED).json({
-      message: 'Report created successfully',
+      message: req.polyglot.t('report'),
       report: newReport
     });
   }
@@ -38,7 +38,7 @@ export default class ReportController {
       req.params.articleSlug ? { articleSlug: req.params.articleSlug } : null
     );
     return res.status(status.OK).json({
-      message: 'fetched all reports successfully',
+      message: req.polyglot.t('allReports'),
       reports: findAllReports
     });
   }
@@ -55,7 +55,7 @@ export default class ReportController {
     const findSingle = await report.getSingle(newreport);
     return res
       .status(status.OK)
-      .json({ message: 'Report fetched Successfully', report: findSingle });
+      .json({ message: req.polyglot.t('allReports'), report: findSingle });
   }
 
   /**
@@ -69,6 +69,10 @@ export default class ReportController {
     const deleteSingle = await report.remove({ id: reportId });
     return res
       .status(status.OK)
-      .json({ message: 'Report deleted Successfully', report: deleteSingle, reportId });
+      .json({
+        message: req.polyglot.t('deleteReport'),
+        report: deleteSingle,
+        reportId
+      });
   }
 }

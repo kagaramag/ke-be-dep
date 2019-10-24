@@ -11,21 +11,29 @@ export default class NotificationController {
    * @return {object} return an object containing set configuration
    */
   static async setConfig(req, res) {
-    const config = await Notification.config.create(req.user.id, req.body.config);
+    const config = await Notification.config.create(
+      req.user.id,
+      req.body.config
+    );
 
-    if (config.errors && config.errors.name === 'SequelizeUniqueConstraintError') {
+    if (
+      config.errors &&
+      config.errors.name === 'SequelizeUniqueConstraintError'
+    ) {
       return res
         .status(status.EXIST)
-        .json({ errors: { config: 'you already have set configurations' } });
+        .json({ errors: { config: req.polyglot.t('configSet') } });
     }
 
     return config.errors
       ? res.status(status.SERVER_ERROR).json({
-        errors: 'Oops, something went wrong, please try again'
-      })
+          errors: req.polyglot.t('serverError')
+        })
       : res.status(status.CREATED).json({
-        configuration: Object.keys(config).length ? JSON.parse(config.config) : null
-      });
+          configuration: Object.keys(config).length
+            ? JSON.parse(config.config)
+            : null
+        });
   }
 
   /**
@@ -37,12 +45,14 @@ export default class NotificationController {
     const config = await Notification.config.getOne(req.user.id);
 
     if (!config.errors) {
-      config.config = Object.keys(config).length ? JSON.parse(config.config) : null;
+      config.config = Object.keys(config).length
+        ? JSON.parse(config.config)
+        : null;
       return res.status(status.OK).json(config);
     }
     return res
       .status(status.SERVER_ERROR)
-      .json({ errors: 'Oops, something went wrong, please try again' });
+      .json({ errors: req.polyglot.t('serverError') });
   }
 
   /**
@@ -51,19 +61,22 @@ export default class NotificationController {
    * @return {object} return an object containing the updated configuration
    */
   static async updateConfig(req, res) {
-    const config = await Notification.config.update(req.user.id, req.body.config);
+    const config = await Notification.config.update(
+      req.user.id,
+      req.body.config
+    );
 
     if (config.errors) {
       return res
         .status(status.SERVER_ERROR)
-        .json({ errors: 'Oops, something went wrong, please try again' });
+        .json({ errors: req.polyglot.t('serverError') });
     }
 
     return config.config
       ? res.status(status.OK).json({ configuration: JSON.parse(config.config) })
       : res.status(status.BAD_REQUEST).json({
-        errors: { notification: "you don't have set configuration" }
-      });
+          errors: { notification: req.polyglot.t('configNot') }
+        });
   }
 
   /**
@@ -74,15 +87,22 @@ export default class NotificationController {
   static async getAll(req, res) {
     const { url, query, user } = req;
     const [offset, limit] = [query.offset || 0, query.limit || 20];
-    const notificationStatus = (url.search(/\/unseen/g) >= 0 && 'unseen') || (url.search(/\/seen/g) >= 0 && 'seen');
+    const notificationStatus =
+      (url.search(/\/unseen/g) >= 0 && 'unseen') ||
+      (url.search(/\/seen/g) >= 0 && 'seen');
 
-    const notifications = await Notification.getAll(user.id, notificationStatus, offset, limit);
+    const notifications = await Notification.getAll(
+      user.id,
+      notificationStatus,
+      offset,
+      limit
+    );
 
     return !notifications.errors
       ? res.status(status.OK).json({ notifications })
       : res
-        .status(status.SERVER_ERROR)
-        .json({ errors: 'Oops, something went wrong, please try again' });
+          .status(status.SERVER_ERROR)
+          .json({ errors: req.polyglot.t('serverError') });
   }
 
   /**
@@ -91,20 +111,25 @@ export default class NotificationController {
    * @return {object} return an object containing one notification
    */
   static async getOne(req, res) {
-    const notification = await Notification.getOne(req.user.id, req.params.notificationId);
+    const notification = await Notification.getOne(
+      req.user.id,
+      req.params.notificationId
+    );
     const errors = notification.errors || null;
 
     return (
-      (errors
-        && errors.name === 'SequelizeDatabaseError'
-        && res.status(status.BAD_REQUEST).json({
-          errors: { notification: 'the provided notification ID should be an integer' }
-        }))
-      || (errors
-        && res.status(status.SERVER_ERROR).json({
-          errors: 'Oops, something went wrong, please try again'
-        }))
-      || res.status(status.OK).json({ notification })
+      (errors &&
+        errors.name === 'SequelizeDatabaseError' &&
+        res.status(status.BAD_REQUEST).json({
+          errors: {
+            notification: req.polyglot.t('idNotFound')
+          }
+        })) ||
+      (errors &&
+        res.status(status.SERVER_ERROR).json({
+          errors: req.polyglot.t('serverError')
+        })) ||
+      res.status(status.OK).json({ notification })
     );
   }
 
@@ -115,24 +140,33 @@ export default class NotificationController {
    */
   static async update(req, res) {
     const [notificationStatus, notificationId, preference] = [
-      (req.url.search(/\/unseen/g) >= 0 && 'unseen') || (req.url.search(/\/seen/g) >= 0 && 'seen'),
+      (req.url.search(/\/unseen/g) >= 0 && 'unseen') ||
+        (req.url.search(/\/seen/g) >= 0 && 'seen'),
       req.params.notificationId,
       req.body.preference
     ];
-    const notifications = await Notification.update(req.user.id, notificationId, {
-      status: notificationStatus,
-      preference
-    });
+    const notifications = await Notification.update(
+      req.user.id,
+      notificationId,
+      {
+        status: notificationStatus,
+        preference
+      }
+    );
     return (
-      (notifications.errors
-        && ((notifications.errors.name === 'SequelizeDatabaseError'
-          && res.status(status.BAD_REQUEST).json({
-            errors: { notification: 'the provided notification ID should be an integer' }
-          }))
-          || res.status(status.SERVER_ERROR).json({
-            errors: 'Oops, something went wrong, please try again'
-          })))
-      || res.status(notifications.length ? status.OK : status.NOT_FOUND).json({ notifications })
+      (notifications.errors &&
+        ((notifications.errors.name === 'SequelizeDatabaseError' &&
+          res.status(status.BAD_REQUEST).json({
+            errors: {
+              notification: req.polyglot.t('idNotFound')
+            }
+          })) ||
+          res.status(status.SERVER_ERROR).json({
+            errors: req.polyglot.t('serverError')
+          }))) ||
+      res
+        .status(notifications.length ? status.OK : status.NOT_FOUND)
+        .json({ notifications })
     );
   }
 
@@ -142,23 +176,26 @@ export default class NotificationController {
    * @returns {object} Object representing the response returned
    */
   static async delete(req, res) {
-    const deleted = await Notification.remove(req.params.notificationId, req.user.id);
+    const deleted = await Notification.remove(
+      req.params.notificationId,
+      req.user.id
+    );
     const errors = deleted.errors || null;
 
     return errors
-      ? (errors.name === 'SequelizeDatabaseError'
-          && res.status(status.BAD_REQUEST).json({
+      ? (errors.name === 'SequelizeDatabaseError' &&
+          res.status(status.BAD_REQUEST).json({
             errors: {
-              notification: 'the provided notification ID is not valid, it should be an integer'
+              notification: req.polyglot.t('idNotFound')
             }
-          }))
-          || res
+          })) ||
+          res
             .status(status.SERVER_ERROR)
-            .json({ errors: 'Oops, something went wrong, please try again' })
-      : (!deleted
-          && res.status(status.NOT_FOUND).json({
-            errors: { notification: 'notification not deleted' }
-          }))
-          || res.status(status.OK).json({ message: 'notification successfully deleted' });
+            .json({ errors: req.polyglot.t('serverError') })
+      : (!deleted &&
+          res.status(status.NOT_FOUND).json({
+            errors: { notification: req.polyglot.t('deleteChat') }
+          })) ||
+          res.status(status.OK).json({ message: req.polyglot.t('deleteChat') });
   }
 }

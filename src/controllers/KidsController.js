@@ -14,7 +14,7 @@ export default class KidsController {
   static async create(req, res) {
     if (req.user.role !== 'parent') {
       return res.status(status.UNAUTHORIZED).json({
-        errors: { parent: 'Sorry, you have to be a parent to perform this action' }
+        errors: { parent: req.polyglot.t('parentError') }
       });
     }
     const kid = await Kid.create({
@@ -23,7 +23,10 @@ export default class KidsController {
     });
     if (kid.errors) {
       return res.status(status.SERVER_ERROR).json({
-        errors: kid.errors.name === 'SequelizeDatabaseError' ? { error: 'Something went wrong while connecting to the database, try again later' } : { error: 'Error occurred, try again later' }
+        errors:
+          kid.errors.name === 'SequelizeDatabaseError'
+            ? { error: req.polyglot.t('serverError') }
+            : { error: req.polyglot.t('serverError') }
       });
     }
     return res.status(status.CREATED).json({
@@ -40,10 +43,10 @@ export default class KidsController {
     const kids = await Kid.findAll({ userId: req.user.id });
     return !kids.error
       ? res.status(status.OK).json({
-        kids
-      })
+          kids
+        })
       : res.status(status.SERVER_ERROR).json({
-        errors: kids.error
-      });
+          errors: kids.error
+        });
   }
 }
