@@ -19,18 +19,22 @@ export default class PermissionController {
     );
     let errors = newPermissions.errors || null;
     if (errors) {
-      errors = errors.name === 'SequelizeUniqueConstraintError'
-        ? {
-          code: status.EXIST,
-          error: { permissions: 'Sorry, this permission is already defined' }
-        }
-        : { code: status.SERVER_ERROR, errors: 'ooppps something went wrong' };
+      errors =
+        errors.name === 'SequelizeUniqueConstraintError'
+          ? {
+              code: status.EXIST,
+              error: { permissions: req.polyglot.t('permissionExists') }
+            }
+          : {
+              code: status.SERVER_ERROR,
+              errors: req.polyglot.t('serverError')
+            };
     }
     return errors
       ? res.status(errors.code).json({ errors: errors.error })
       : res.status(status.CREATED).json({
-        permissions: newPermissions
-      });
+          permissions: newPermissions
+        });
   }
 
   /**
@@ -40,15 +44,16 @@ export default class PermissionController {
    */
   static async findAll(req, res) {
     const { userType } = req.params;
-    const permissions = (userType && (await User.permissions.findAll({ userType })))
-      || (await User.permissions.findAll());
+    const permissions =
+      (userType && (await User.permissions.findAll({ userType }))) ||
+      (await User.permissions.findAll());
 
     return (
-      (permissions.length
-        && res.status(status.OK).json({
+      (permissions.length &&
+        res.status(status.OK).json({
           permissions
-        }))
-      || res.status(status.NOT_FOUND).json({
+        })) ||
+      res.status(status.NOT_FOUND).json({
         message: 'No permission found'
       })
     );

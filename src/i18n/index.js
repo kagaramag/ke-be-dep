@@ -32,6 +32,8 @@ export const messages = {
     parentError: 'Sorry, you have to be a parent to perform this action',
     configSet: 'you already have set configurations',
     configNot: "you haven't set configuration",
+    permissionExists: 'Sorry, this permission is already defined',
+    permissionNotFound: 'Permission not found',
 
     // Success messages
     legal: 'Legal documents',
@@ -81,7 +83,8 @@ export const messages = {
     configSet: 'Ibi byari byakozwe',
 
     configNot: 'ntabwo wabihisemo',
-
+    permissionExists: 'Usanzwe ubifitiye ububasha',
+    permissionNotFound: 'Nta bubasha ubifitiye',
     // Success messages
     legal: 'Ibyangombwa byose',
 
