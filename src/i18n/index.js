@@ -19,8 +19,15 @@ export const messages = {
     passEmpty: 'the password can not be empty',
     required: 'required',
     passNotChanged: 'Password not updated',
+    messageError: 'the message should be a string and should not be empty',
+    invalidAccount: 'your account is not valid',
+    serverError: 'Oops, something went wrong',
+    notdeleteChat: 'chat not deleted',
 
     // Success messages
+    messageSent: 'message successfully sent',
+    deleteChat: 'chat successfully deleted',
+
     signupSuccessful:
       'Thank you for registering. Please, check your email to activate your account',
     loginSuccessful: 'You have logged in successfully',
@@ -40,7 +47,15 @@ export const messages = {
     passEmpty: "Nta jambo ry'ibanga wanditse",
     passNotChanged: "ijambo ry'ibanga ntiryahindutse",
     required: 'irakenewe',
+    messageError: 'Ntibyemewe kohereza ubutumwa burimo ubusa',
+
+    invalidAccount: 'Konti yawe ntiremezwa',
+    serverError: 'Reba ko ufite internet ikora neza',
+
     // Success messages
+    deleteChat: 'ubutumwa burasibwe',
+    notdeleteChat: 'ubutumwa ntibubashije gusibwa',
+    messageSent: 'ubutumwa bwoherejwe',
     signupSuccessful:
       'Murakoze gufunguza konti. Reba email tukoherereje ubashe gutangiza konti yanyu',
     deactivateAccount: 'Konti yawe irasibwe',
