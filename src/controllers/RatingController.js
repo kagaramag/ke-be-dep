@@ -21,13 +21,13 @@ class RatingController {
     return response.errors
       ? res.status(status.BAD_REQUEST).send({ response })
       : res.status(response === 'created' ? status.CREATED : status.OK).send({
-        rating: {
-          message:
+          rating: {
+            message:
               response === 'created'
-                ? 'Thank you for rating this article'
-                : 'Your article rating has been updated'
-        }
-      });
+                ? req.polyglot.t('thanks')
+                : req.polyglot.t('updated')
+          }
+        });
   }
 
   /**
@@ -49,17 +49,23 @@ class RatingController {
    */
   static async sortArticlesByRating(req, res) {
     const { limit, offset } = req.query;
-    const articles = await Article.rate.sort(parseInt(limit, 0) || 20, offset || 0, {
-      keyword: req.query.keyword,
-      author: req.query.author,
-      tag: req.query.tag
-    });
+    const articles = await Article.rate.sort(
+      parseInt(limit, 0) || 20,
+      offset || 0,
+      {
+        keyword: req.query.keyword,
+        author: req.query.author,
+        tag: req.query.tag
+      }
+    );
     return articles.length >= 1 && !!articles
       ? res.status(status.OK).send({
-        articles,
-        articlesCount: articles.length
-      })
-      : res.status(status.NOT_FOUND).send({ message: 'No articles found' });
+          articles,
+          articlesCount: articles.length
+        })
+      : res
+          .status(status.NOT_FOUND)
+          .send({ message: req.polyglot.t('noArticle') });
   }
 
   /**
@@ -76,10 +82,12 @@ class RatingController {
     );
     return Object.keys(articleRatings).length
       ? res.status(status.OK).send({
-        articleRatings,
-        articlesCount: articleRatings.length
-      })
-      : res.status(status.NOT_FOUND).send({ message: 'No rating for this article' });
+          articleRatings,
+          articlesCount: articleRatings.length
+        })
+      : res
+          .status(status.NOT_FOUND)
+          .send({ message: req.polyglot.t('noRate') });
   }
 }
 

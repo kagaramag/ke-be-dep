@@ -34,6 +34,8 @@ export const messages = {
     configNot: "you haven't set configuration",
     permissionExists: 'Sorry, this permission is already defined',
     permissionNotFound: 'Permission not found',
+    noArticle: 'No articles found',
+    noRate: 'No rating for this article',
 
     // Success messages
     legal: 'Legal documents',
@@ -55,7 +57,9 @@ export const messages = {
     loginSuccessful: 'You have logged in successfully',
     deactivateAccount: 'User account deleted successfully',
     passChanged: 'Success! your password has been changed.',
-    emailSent: 'Email sent, please check your email'
+    emailSent: 'Email sent, please check your email',
+    thanks: 'Thank you for rating this article',
+    updated: 'Your article rating has been updated'
   },
 
   fr: {
@@ -85,6 +89,8 @@ export const messages = {
     configNot: 'ntabwo wabihisemo',
     permissionExists: 'Usanzwe ubifitiye ububasha',
     permissionNotFound: 'Nta bubasha ubifitiye',
+    noArticle: 'Nta nyandiko zibonetse',
+    noRate: 'Nta gitekerezo cyatanzwe kurino nyandiko',
     // Success messages
     legal: 'Ibyangombwa byose',
 
@@ -107,6 +113,8 @@ export const messages = {
     deactivateAccount: 'Konti yawe irasibwe',
     loginSuccessful: 'Ubashije kwinjira neza',
     emailSent: 'Reba ubutumwa bwoherejwe kuri email yanyu',
-    passChanged: "Byizaaa! ijambo ry'ibanga ryawe ryahinduwe."
+    passChanged: "Byizaaa! ijambo ry'ibanga ryawe ryahinduwe.",
+    thanks: 'Murakoze gutanga igitekerezo',
+    updated: 'Murakoze igitekerezo cyanyu cyahinduwe'
   }
 };

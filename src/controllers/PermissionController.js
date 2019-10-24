@@ -54,7 +54,7 @@ export default class PermissionController {
           permissions
         })) ||
       res.status(status.NOT_FOUND).json({
-        message: 'No permission found'
+        message: req.polyglot.t('permissionNotFound')
       })
     );
   }
