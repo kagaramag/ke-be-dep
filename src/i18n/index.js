@@ -35,6 +35,7 @@ export const messages = {
     commentEdit: 'Comment edited successfully',
     allComments: 'All previous comments',
     removeComment: 'Comment removed from history successfully',
+    commentLike: 'Igitekerezo uragikunze',
 
     signupSuccessful:
       'Thank you for registering. Please, check your email to activate your account',
@@ -63,6 +64,7 @@ export const messages = {
     commentNotFound: 'igitekerezo ntikibashije kuboneka',
     // Success messages
 
+    commentLike: 'You liked the comment',
     removeComment: 'igitekerezo cyakuwe mubindi',
     allComments: 'ibiganiro byose',
     commentEdit: 'igitekerezo cyahinduwe',
