@@ -23,10 +23,18 @@ export const messages = {
     invalidAccount: 'your account is not valid',
     serverError: 'Oops, something went wrong',
     notdeleteChat: 'chat not deleted',
+    idNotFound: 'the provided chat ID is not valid, it should be an integer',
+    commentNotFound: 'Comment is not in history',
 
     // Success messages
     messageSent: 'message successfully sent',
     deleteChat: 'chat successfully deleted',
+    commentSuccess: 'Comment successfully created',
+    commentFetch: 'Comments fetched successfully',
+    commentDelete: 'Comment successfully deleted',
+    commentEdit: 'Comment edited successfully',
+    allComments: 'All previous comments',
+    removeComment: 'Comment removed from history successfully',
 
     signupSuccessful:
       'Thank you for registering. Please, check your email to activate your account',
@@ -51,8 +59,16 @@ export const messages = {
 
     invalidAccount: 'Konti yawe ntiremezwa',
     serverError: 'Reba ko ufite internet ikora neza',
-
+    idNotFound: 'ubutumwa ushaka gusiba ntibubaho',
+    commentNotFound: 'igitekerezo ntikibashije kuboneka',
     // Success messages
+
+    removeComment: 'igitekerezo cyakuwe mubindi',
+    allComments: 'ibiganiro byose',
+    commentEdit: 'igitekerezo cyahinduwe',
+    commentDelete: 'igitekerezo cyasibwe',
+    commentFetch: 'ibiganiro byatanzwe',
+    commentSuccess: 'igitekerezo cyoherejwe',
     deleteChat: 'ubutumwa burasibwe',
     notdeleteChat: 'ubutumwa ntibubashije gusibwa',
     messageSent: 'ubutumwa bwoherejwe',
