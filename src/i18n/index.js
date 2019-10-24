@@ -59,7 +59,8 @@ export const messages = {
     passChanged: 'Success! your password has been changed.',
     emailSent: 'Email sent, please check your email',
     thanks: 'Thank you for rating this article',
-    updated: 'Your article rating has been updated'
+    updated: 'Your article rating has been updated',
+    readingstat: 'Reading Stats fetched'
   },
 
   fr: {
@@ -115,6 +116,7 @@ export const messages = {
     emailSent: 'Reba ubutumwa bwoherejwe kuri email yanyu',
     passChanged: "Byizaaa! ijambo ry'ibanga ryawe ryahinduwe.",
     thanks: 'Murakoze gutanga igitekerezo',
-    updated: 'Murakoze igitekerezo cyanyu cyahinduwe'
+    updated: 'Murakoze igitekerezo cyanyu cyahinduwe',
+    readingstat: 'Ibijyanye no gusoma'
   }
 };

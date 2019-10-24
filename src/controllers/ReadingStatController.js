@@ -39,7 +39,7 @@ export default class ReadingStat {
     });
 
     return res.status(status.OK).json({
-      message: 'Reading Stats fetched',
+      message: req.polyglot.t('readingstat'),
       readingStats
     });
   }
