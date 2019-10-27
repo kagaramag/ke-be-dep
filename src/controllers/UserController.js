@@ -2,7 +2,10 @@ import 'dotenv/config';
 import { User } from '../queries';
 import status from '../config/status';
 import {
-  checkCreateUpdateUserErrors, sendMail, token as tokenHelper, urlHelper
+  checkCreateUpdateUserErrors,
+  sendMail,
+  token as tokenHelper,
+  urlHelper
 } from '../helpers';
 
 const { CI } = process.env;
@@ -36,7 +39,9 @@ export default class UserController {
     }
 
     return res.status(status.OK).json({
-      message: `Profile successfully updated. ${req.changeEmail.message}`,
+      message: `${req.polyglot.t('profileSuccess')}. ${
+        req.changeEmail.message
+      }`,
       user: updatedUser
     });
   }
@@ -54,12 +59,12 @@ export default class UserController {
 
     return tutors.length
       ? res.status(status.OK).json({
-        tutors: tutors.map(tutor => delete tutor.user.password && tutor.user)
-      })
+          tutors: tutors.map(tutor => delete tutor.user.password && tutor.user)
+        })
       : res.status(status.NOT_FOUND).json({
-        tutors: [],
-        message: 'No tutors found'
-      });
+          tutors: [],
+          message: req.polyglot.t('noTutor')
+        });
   }
 
   /**
@@ -72,7 +77,7 @@ export default class UserController {
     const users = await User.getAllUser({}, offset, limit);
 
     return res.status(status.OK).json({
-      users: users.map((user) => {
+      users: users.map(user => {
         const { password, ...userInfo } = user.get();
         return userInfo;
       })
@@ -94,7 +99,9 @@ export default class UserController {
     delete user.accountProviderUserId;
     return user
       ? res.status(status.OK).json({ user })
-      : res.status(status.NOT_FOUND).json({ errors: { user: 'no user with this username found' } });
+      : res
+          .status(status.NOT_FOUND)
+          .json({ errors: { user: req.polyglot.t('userNotFound') } });
   }
 
   /**
@@ -110,19 +117,25 @@ export default class UserController {
 
     const user = await User.findOne({ username });
     if (!user.errors && !Object.keys(user).length) {
-      return res
-        .status(status.NOT_FOUND)
-        .json({ message: `This user with the username ${username} does not exist` });
+      return res.status(status.NOT_FOUND).json({
+        message: `${username} ${req.polyglot.t('userNotFound')}`
+      });
     }
     if (user.role === role) {
-      return res.status(status.EXIST).send({ message: 'The user already has this role' });
+      return res
+        .status(status.EXIST)
+        .send({ message: req.polyglot.t('permissionExists') });
     }
     if (!req.body.role) {
-      return res.status(status.BAD_REQUEST).send({ message: 'the role can not be empty' });
+      return res
+        .status(status.BAD_REQUEST)
+        .send({ message: req.polyglot.t('emptyRole') });
     }
     const updatedUser = await User.update({ role }, { username });
     delete updatedUser.password;
-    return res.status(status.OK).json({ message: 'roles updated successfully', updatedUser });
+    return res
+      .status(status.OK)
+      .json({ message: req.polyglot.t('updateRole'), updatedUser });
   }
 
   // follow user
@@ -138,7 +151,7 @@ export default class UserController {
     if (checkUser.id === req.user.id) {
       return res
         .status(status.BAD_REQUEST)
-        .json({ errors: { follow: 'You can not follow your self ' } });
+        .json({ errors: { follow: req.polyglot.t('followself') } });
     }
     const follow = await User.follow.add({
       followed: checkUser.id,
@@ -146,13 +159,17 @@ export default class UserController {
     });
     if (follow.errors) {
       return follow.errors.name === 'SequelizeUniqueConstraintError'
-        ? res
-          .status(status.EXIST)
-          .send({ errors: { follow: `You are already following "${username}"` } })
-        : res.status(status.SERVER_ERROR).json({ errors: 'oops, something went wrong' });
+        ? res.status(status.EXIST).send({
+            errors: {
+              follow: ` ${req.polyglot.t('followAlready')}  "${username}"`
+            }
+          })
+        : res
+            .status(status.SERVER_ERROR)
+            .json({ errors: req.polyglot.t('serverError') });
     }
     return res.status(status.CREATED).json({
-      message: `now you are following ${checkUser.username}`,
+      message: `${req.polyglot.t('following')} ${checkUser.username}`,
       follow: { ...follow, followedUser: checkUser }
     });
   }
@@ -172,16 +189,20 @@ export default class UserController {
       ? await User.follow.remove({ userId: user.id, followed: checkUser.id })
       : null;
     if (hasUnfollowed && hasUnfollowed.errors) {
-      return res.status(status.SERVER_ERROR).json({ errors: 'oops, something went wrong!!' });
+      return res
+        .status(status.SERVER_ERROR)
+        .json({ errors: req.polyglot.t('serverError') });
     }
     return hasUnfollowed
       ? res.status(status.OK).json({
-        message: `you unfollowed ${username}`,
-        followed: checkUser.id
-      })
-      : res
-        .status(status.BAD_REQUEST)
-        .json({ errors: { follow: `you are not following "${username}"` } });
+          message: `${req.polyglot.t('unfollow')} ${username}`,
+          followed: checkUser.id
+        })
+      : res.status(status.BAD_REQUEST).json({
+          errors: {
+            follow: `${req.polyglot.t('notfollowing')} "${username}"`
+          }
+        });
   }
 
   /**
@@ -195,12 +216,14 @@ export default class UserController {
     const followers = await User.follow.getAll({ followed: id });
     return followers.length
       ? res.status(status.OK).json({
-        message: 'Followers',
-        followers: followers.map(follower => delete follower.get().followedUser && follower)
-      })
+          message: 'Followers',
+          followers: followers.map(
+            follower => delete follower.get().followedUser && follower
+          )
+        })
       : res.status(status.NOT_FOUND).json({
-        errors: { follows: "You don't have followers" }
-      });
+          errors: { follows: req.polyglot.t('followers') }
+        });
   }
 
   /**
@@ -211,7 +234,9 @@ export default class UserController {
    */
   static async following(req, res) {
     const following = await User.follow.getAll({ userId: req.user.id });
-    const follows = following.map(followed => delete followed.get().follower && followed);
+    const follows = following.map(
+      followed => delete followed.get().follower && followed
+    );
     if (following.length) {
       return res.status(status.OK).json({
         message: 'Following',
@@ -219,7 +244,7 @@ export default class UserController {
       });
     }
     return res.status(status.NOT_FOUND).json({
-      errors: { follows: "You don't follow any one" }
+      errors: { follows: req.polyglot.t('dontfollow') }
     });
   }
 
@@ -234,7 +259,10 @@ export default class UserController {
     const decodedToken = tokenHelper.decode(req.params.token);
 
     if (!decodedToken.errors || decodedToken.email) {
-      await User.update({ email: decodedToken.email }, { id: decodedToken.userId });
+      await User.update(
+        { email: decodedToken.email },
+        { id: decodedToken.userId }
+      );
       return res.redirect(`${redirectUrl}/profile?email=${decodedToken.email}`);
     }
     return res.redirect(`${redirectUrl}/profile?token=${status.UNAUTHORIZED}`);

@@ -10,10 +10,13 @@ accept-language: fr_MX or en_MX
 export const messages = {
   en: {
     // Error messages
+    followers: "You don't have followers",
+    dontfollow: "You don't follow any one",
+
     usernameNotExists: 'This user with the username does not exist',
     incorrectCredentials: 'The credentials you provided are incorrect',
     noAccess: 'Unauthorized access',
-    userNotFound: 'sorry, user with id  not found!!',
+    userNotFound: 'sorry, user not found!!',
     emailNotFound: 'email not found..',
     passwordNotMatching: 'Passwords are not matching',
     passEmpty: 'the password can not be empty',
@@ -36,6 +39,12 @@ export const messages = {
     permissionNotFound: 'Permission not found',
     noArticle: 'No articles found',
     noRate: 'No rating for this article',
+    notfollowing: 'you are not following',
+
+    noTutor: 'No tutors found',
+    emptyRole: 'the role can not be empty',
+    followself: 'You can not follow your self',
+    followAlready: 'You are already following',
 
     // Success messages
     legal: 'Legal documents',
@@ -66,11 +75,18 @@ export const messages = {
     deleteReport: 'Report deleted Successfully',
     tutorRequest:
       'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
-    tutorSuccess: `The action was done successfully`
+    tutorSuccess: `The action was done successfully`,
+    profileSuccess: 'Profile successfully updated',
+    updateRole: 'roles updated successfully',
+    following: 'now you are following',
+    unfollow: 'you unfollowed'
   },
 
   fr: {
     // Error messages
+    followers: 'Nta bantu bagukurikira ufite',
+    dontfollow: 'Nta muntu ukurikira',
+    notfollowing: 'ntabwo usanzwe ukurikira',
     usernameNotExists: 'Nta konti ikoresha iri zina ibashije kuboneka',
     incorrectCredentials: 'Ukoresheje ibikuranga bitari byo',
     noAccess: 'Nta burenganzira ubifitiye',
@@ -81,6 +97,8 @@ export const messages = {
     passNotChanged: "ijambo ry'ibanga ntiryahindutse",
     required: 'irakenewe',
     messageError: 'Ntibyemewe kohereza ubutumwa burimo ubusa',
+    followself: 'Ntabwo wabasha kwikurikira',
+    followAlready: 'Usanzwe ukurikira',
 
     invalidAccount: 'Konti yawe ntiremezwa',
     serverError: 'Reba ko ufite internet ikora neza',
@@ -98,14 +116,17 @@ export const messages = {
     permissionNotFound: 'Nta bubasha ubifitiye',
     noArticle: 'Nta nyandiko zibonetse',
     noRate: 'Nta gitekerezo cyatanzwe kurino nyandiko',
+    noTutor: 'Nta barimu babonetse',
+    emptyRole: 'kohereza ubusa ntibyemewe',
     // Success messages
     legal: 'Ibyangombwa byose',
 
+    updateRole: 'Ubushobozi bwe burahinduwe',
     deleteChoice: 'Ijambo wari wahisemo rirasibwe',
     choosenHighlight: 'Uhisemo iri jambo',
-
+    following: 'ubu uri gukurikira',
     commentLike: 'Igitekerezo uragikunze',
-
+    unfollow: 'uhagaritse gukurikira',
     removeComment: 'igitekerezo cyakuwe mubindi',
     allComments: 'ibiganiro byose',
     commentEdit: 'igitekerezo cyahinduwe',
@@ -129,6 +150,7 @@ export const messages = {
     deleteReport: 'Raporo irasibwe',
     tutorRequest:
       "Umaze gusaba gukorana n'uyu mwarimu, mutegereze ubasabe bwanyu bwemezwe",
-    tutorSuccess: 'bikozwe neza'
+    tutorSuccess: 'bikozwe neza',
+    profileSuccess: 'Konti yawe imaze guhindurwa'
   }
 };
