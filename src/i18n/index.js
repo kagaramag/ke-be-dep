@@ -66,7 +66,7 @@ export const messages = {
     deleteReport: 'Report deleted Successfully',
     tutorRequest:
       'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
-    tutorSuccess: `You have successfully ${action} this action`
+    tutorSuccess: `The action was done successfully`
   },
 
   fr: {

@@ -16,7 +16,7 @@ export default class TutorshipController {
       tuteeId: req.body.tuteeId,
       receiverId: req.body.receiverId,
       senderId: req.user.id,
-      messageType: req.user.role === 'parent' ? 'forTutor' : 'forParent',
+      messageType: req.user.role === 'parent' ? 'forTutor' : 'forParent'
     });
     if (tutorship.errors) {
       res.status(status.SERVER_ERROR).json({
@@ -24,9 +24,8 @@ export default class TutorshipController {
       });
     }
     return res.status(status.CREATED).json({
-      message: 'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
-      tutorship,
-
+      message: req.polyglot.t('tutorRequest'),
+      tutorship
     });
   }
 
@@ -36,14 +35,23 @@ export default class TutorshipController {
    * @return {object} return an object containing the tutorship info
    */
   static async getTutorship(req, res) {
-    const tutorship = await Tutorship.findAll({ tutoringId: req.params.id || null });
+    const tutorship = await Tutorship.findAll({
+      tutoringId: req.params.id || null
+    });
     return !tutorship.error
       ? res.status(status.OK).json({
-        tutorship,
-      })
+          tutorship
+        })
       : res.status(status.SERVER_ERROR).json({
-        errors: { tutorship: tutorship.error.name === 'SequelizeDatabaseError' ? `Error occurred while retrieving information. ${tutorship.error.parent.hint}` : tutorship.error }
-      });
+          errors: {
+            tutorship:
+              tutorship.error.name === 'SequelizeDatabaseError'
+                ? `${req.polyglot.t('serverError')} ${
+                    tutorship.error.parent.hint
+                  }`
+                : tutorship.error
+          }
+        });
   }
 
   /**
@@ -62,15 +70,17 @@ export default class TutorshipController {
       action = `${action}ed`;
     }
     const tutorship = await Tutorship.action(
-      req.user.role === 'tutor' ? {
-        tutorId: req.user.id,
-        tuteeId: req.body.tuteeId,
-        action
-      } : {
-        tuteeId: req.body.tuteeId,
-        tutorId: req.body.tutorId,
-        action
-      }
+      req.user.role === 'tutor'
+        ? {
+            tutorId: req.user.id,
+            tuteeId: req.body.tuteeId,
+            action
+          }
+        : {
+            tuteeId: req.body.tuteeId,
+            tutorId: req.body.tutorId,
+            action
+          }
     );
 
     if (tutorship.errors) {
@@ -79,7 +89,7 @@ export default class TutorshipController {
       });
     }
     return res.status(status.OK).json({
-      message: `You have successfully ${action} this action`,
+      message: req.polyglot.t('tutorSuccess')
     });
   }
 }
