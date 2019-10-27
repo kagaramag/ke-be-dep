@@ -19,7 +19,7 @@ export default class CommentLikeController {
     const likeComment = await comment.createLike(like);
     await updateCommentLikes(req);
     return res.status(status.CREATED).send({
-      message: 'You liked the comment',
+      message: req.polyglot.t('commentLike'),
       createLike: likeComment
     });
   }

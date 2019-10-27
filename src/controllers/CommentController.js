@@ -20,7 +20,7 @@ export default class CommentController {
     const response = await comment.create({ articleSlug, userId, body });
     const createdComment = await comment.getSingle(response.id);
     return res.status(status.CREATED).json({
-      message: 'Comment successfully created',
+      message: req.polyglot.t('commentSuccess'),
       comment: createdComment
     });
   }
@@ -36,7 +36,7 @@ export default class CommentController {
     const allComments = await comment.getAll({ articleSlug });
     return res
       .status(status.OK)
-      .json({ message: 'Comments fetched successfully', comments: allComments });
+      .json({ message: req.polyglot.t('commentFetch'), comments: allComments });
   }
 
   /**
@@ -48,7 +48,9 @@ export default class CommentController {
   static async delete(req, res) {
     const { commentId } = req.params;
     await comment.remove({ id: commentId });
-    return res.status(status.OK).json({ message: 'Comment successfully deleted' });
+    return res
+      .status(status.OK)
+      .json({ message: req.polyglot.t('commentDelete') });
   }
 
   /**
@@ -60,7 +62,11 @@ export default class CommentController {
   static async editComment(req, res) {
     const userId = req.user.id;
     const { articleSlug, commentId } = req.params;
-    const findComment = await comment.getSingle({ articleSlug, id: commentId, userId });
+    const findComment = await comment.getSingle({
+      articleSlug,
+      id: commentId,
+      userId
+    });
     await editcomment.create({
       articleSlug: findComment.articleSlug,
       userId: findComment.userId,
@@ -69,7 +75,9 @@ export default class CommentController {
     });
     const { body } = req.body;
     await comment.update({ body }, { id: commentId });
-    return res.status(status.OK).json({ message: 'Comment edited successfully' });
+    return res
+      .status(status.OK)
+      .json({ message: req.polyglot.t('commentEdit') });
   }
 
   /**
@@ -83,7 +91,9 @@ export default class CommentController {
     const { articleSlug, commentId } = req.params;
     const newComment = { articleSlug, commentId, userId };
     const findAllEdit = await editcomment.getAll(newComment);
-    return res.status(status.OK).json({ message: 'All previous comments', history: findAllEdit });
+    return res
+      .status(status.OK)
+      .json({ message: req.polyglot.t('allComments'), history: findAllEdit });
   }
 
   /**
@@ -94,10 +104,10 @@ export default class CommentController {
    */
   static async remove(req, res) {
     const { id } = req.params;
-    let message = 'Comment removed from history successfully';
+    let message = req.polyglot.t('removeComment');
     const findEdit = await editcomment.getSingle({ id });
     if (!findEdit) {
-      message = 'Comment is not in history';
+      message = req.polyglot.t('commentNotFound');
       return res.status(status.NOT_FOUND).json({ error: { message } });
     }
     await editcomment.remove({ id });

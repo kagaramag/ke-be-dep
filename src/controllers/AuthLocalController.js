@@ -1,8 +1,8 @@
-import "dotenv/config";
-import { User, UserRole } from "../queries";
-import * as helper from "../helpers";
-import * as validate from "../helpers/validation";
-import status from "../config/status";
+import 'dotenv/config';
+import { User, UserRole } from '../queries';
+import * as helper from '../helpers';
+import * as validate from '../helpers/validation';
+import status from '../config/status';
 
 const { CI } = process.env;
 const { appUrl, travis } = helper.urlHelper.frontend;
@@ -27,14 +27,13 @@ export default class AuthLocalController {
 
     return errors
       ? res.status(errors.code).json({ errors: errors.errors })
-      : (await helper.sendMail(email, "signup", {
+      : (await helper.sendMail(email, 'signup', {
           email,
           firstName,
           lastName
         })) &&
           res.status(status.CREATED).json({
-            message:
-              "Thank you for registering. Please, check your email to activate your account",
+            message: req.polyglot.t('signupSuccessful'),
             user: newUser
           });
   }
@@ -53,11 +52,11 @@ export default class AuthLocalController {
     if (Object.keys(checkUser).length > 0) {
       const comparePassword = helper.password.compare(
         password,
-        checkUser.password || ""
+        checkUser.password || ''
       );
       if (!comparePassword) {
         return res.status(status.UNAUTHORIZED).json({
-          errors: { credentials: "The credentials you provided are incorrect" }
+          errors: { credentials: req.polyglot.t('incorrectCredentials') }
         });
       }
       const payload = {
@@ -69,7 +68,7 @@ export default class AuthLocalController {
       delete checkUser.password;
       checkUser = { ...checkUser, role: checkUserRole.role };
       return res.status(status.OK).json({
-        message: "You have logged in successfully",
+        message: req.polyglot.t('loginSuccessful'),
         user: checkUser,
         token
       });
@@ -88,8 +87,10 @@ export default class AuthLocalController {
     return deactivateAccount
       ? res
           .status(status.OK)
-          .json({ message: "User account deleted successfully", userId: id })
-      : res.status(status.UNAUTHORIZED).json({ errors: "Unauthorized access" });
+          .json({ message: req.polyglot.t('deactivateAccount'), userId: id })
+      : res
+          .status(status.UNAUTHORIZED)
+          .json({ errors: req.polyglot.t('noAccess') });
   }
 
   /**
@@ -106,7 +107,7 @@ export default class AuthLocalController {
       ? res.status(status.OK).json({ user: fetchUser })
       : res.status(status.NOT_FOUND).json({
           errors: {
-            user: `sorry, user with id "${req.params.id}" not found!!`
+            user: req.polyglot.t('userNotFound')
           }
         });
   }
@@ -128,9 +129,9 @@ export default class AuthLocalController {
       return res.status(code).json(errors);
     }
     if (newUser) {
-      await helper.sendMail(email, "signup", { email, firstName, lastName });
+      await helper.sendMail(email, 'signup', { email, firstName, lastName });
       return res.status(status.CREATED).json({
-        message: `activation message sent to ${req.body.email}`
+        message: req.polyglot.t('emailSent')
       });
     }
   }
@@ -157,18 +158,18 @@ export default class AuthLocalController {
     const result = await User.findOne({ email }); // check if the email exist
     if (Object.keys(result).length <= 0) {
       return res.status(status.NOT_FOUND).json({
-        errors: "email not found.."
+        errors: req.polyglot.t('emailNotFound')
       });
     }
 
     const tokenizedEmail = await helper.token.generate({ email });
-    await helper.sendMail(email, "resetPassword", {
+    await helper.sendMail(email, 'resetPassword', {
       email,
       names: `${result.firstName} ${result.lastName}`
     }); // send mail
 
     return res.status(status.OK).json({
-      message: "Email sent, please check your email",
+      message: req.polyglot.t('emailSent'),
       redirect: tokenizedEmail
     });
   }
@@ -185,17 +186,23 @@ export default class AuthLocalController {
     if (passwordOne !== passwordTwo) {
       return res
         .status(status.BAD_REQUEST)
-        .json({ errors: "Passwords are not matching" });
+        .json({ errors: req.polyglot.t('passwordNotMatching') });
     }
 
     if (!req.body.passwordOne || !req.body.passwordTwo) {
       return res
         .status(status.BAD_REQUEST)
-        .json({ errors: "the password can not be empty" });
+        .json({ errors: req.polyglot.t('passEmpty') });
     }
 
-    const isPasswordValid = validate.password(passwordOne, "required");
-    const isPasswordValidTwo = validate.password(passwordTwo, "required");
+    const isPasswordValid = validate.password(
+      passwordOne,
+      req.polyglot.t('required')
+    );
+    const isPasswordValidTwo = validate.password(
+      passwordTwo,
+      req.polyglot.t('required')
+    );
 
     if (isPasswordValid.length || isPasswordValidTwo.length) {
       return res
@@ -211,10 +218,10 @@ export default class AuthLocalController {
     return isUpdated
       ? res.status(status.OK).json({
           isUpdated,
-          message: "Success! your password has been changed."
+          message: req.polyglot.t('passChanged')
         })
       : res
           .status(status.NOT_MODIFIED)
-          .json({ errors: "Password not updated" });
+          .json({ errors: req.polyglot.t('passNotChanged') });
   }
 }
