@@ -13,7 +13,7 @@ export const messages = {
     usernameNotExists: 'This user with the username does not exist',
     incorrectCredentials: 'The credentials you provided are incorrect',
     noAccess: 'Unauthorized access',
-    userNotFound: 'sorry, user with id  not found!!',
+    userNotFound: 'sorry, user not found!!',
     emailNotFound: 'email not found..',
     passwordNotMatching: 'Passwords are not matching',
     passEmpty: 'the password can not be empty',
@@ -37,6 +37,8 @@ export const messages = {
     noArticle: 'No articles found',
     noRate: 'No rating for this article',
 
+    noTutor: 'No tutors found',
+    emptyRole: 'the role can not be empty',
     // Success messages
     legal: 'Legal documents',
     deleteChoice: 'You have successfully removed your highlight',
@@ -66,7 +68,9 @@ export const messages = {
     deleteReport: 'Report deleted Successfully',
     tutorRequest:
       'You have successfully requested to hire this tutor. Please wait for his/her confirmation.',
-    tutorSuccess: `The action was done successfully`
+    tutorSuccess: `The action was done successfully`,
+    profileSuccess: 'Profile successfully updated',
+    updateRole: 'roles updated successfully'
   },
 
   fr: {
@@ -98,9 +102,12 @@ export const messages = {
     permissionNotFound: 'Nta bubasha ubifitiye',
     noArticle: 'Nta nyandiko zibonetse',
     noRate: 'Nta gitekerezo cyatanzwe kurino nyandiko',
+    noTutor: 'Nta barimu babonetse',
+    emptyRole: 'kohereza ubusa ntibyemewe',
     // Success messages
     legal: 'Ibyangombwa byose',
 
+    updateRole: 'Ubushobozi bwe burahinduwe',
     deleteChoice: 'Ijambo wari wahisemo rirasibwe',
     choosenHighlight: 'Uhisemo iri jambo',
 
@@ -129,6 +136,9 @@ export const messages = {
     deleteReport: 'Raporo irasibwe',
     tutorRequest:
       "Umaze gusaba gukorana n'uyu mwarimu, mutegereze ubasabe bwanyu bwemezwe",
-    tutorSuccess: 'bikozwe neza'
+    tutorSuccess: 'bikozwe neza',
+    profileSuccess: 'Konti yawe imaze guhindurwa',
+
+    followself: 'You can not follow your self'
   }
 };
