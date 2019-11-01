@@ -21,11 +21,15 @@ export default {
       allowNull: true,
       defaultValue: 'pending'
     },
-    seniorFive: {
+    language: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    seniorSix: {
+    experience: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    bulletin: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -33,11 +37,11 @@ export default {
       type: Sequelize.STRING,
       allowNull: false
     },
-    diploma: {
+    cv: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    cv: {
+    diploma: {
       type: Sequelize.STRING,
       allowNull: false
     },

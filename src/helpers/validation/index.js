@@ -18,6 +18,7 @@ import createTutoring from './createTutoring';
 import createTutorship from './createTutorship';
 import createLocation from './createLocation';
 import createTutorDetailsForm from './createTutorDetailsForm';
+import gender from './gender';
 
 export {
   email,
@@ -40,4 +41,5 @@ export {
   createTutorship,
   createLocation,
   createTutorDetailsForm,
+  gender
 };

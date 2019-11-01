@@ -14,6 +14,7 @@ export default async (data) => {
           tutorId: data.tutorId
         },
         returning: true,
+        lain: true,
         logging: false,
         individualHooks: true
       }

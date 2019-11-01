@@ -1,5 +1,5 @@
 import status from '../config/status';
-import { Legal, User, TutorDetails } from '../queries';
+import { Legal, User } from '../queries';
 
 /**
  * A class to handle legal document of a tutor
@@ -18,11 +18,6 @@ export default class LegalController {
       const diploma = req.files && req.files[2];
       const passport = req.files && req.files[3];
       const cv = req.files && req.files[4];
-      await TutorDetails.create({
-        userId: id,
-        experience: req.body.experience,
-        language: req.body.language
-      });
       const legalForm = await Legal.create({
         userId: id,
         status: 'pending',
@@ -32,12 +27,13 @@ export default class LegalController {
         passport: `${passport.version}/${passport.public_id}.${passport.format}`,
         cv: `${cv.version}/${cv.public_id}.${cv.format}`
       });
-
       return res.status(status.CREATED).send({
         legalForm
       });
     } catch (error) {
-      console.log(error);
+      return res.status(status.BAD_REQUEST).json({
+        error: 'Error occurred while updating your information. Try again'
+      });
     }
   }
 

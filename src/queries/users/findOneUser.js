@@ -10,7 +10,7 @@ export default async (condition = {}) => {
       ? await db.User.findOne({
         where: condition,
         attributes: {
-          exclude: ['bio', 'accountProvider', 'accountProviderUserId']
+          exclude: ['accountProvider', 'accountProviderUserId']
         },
         logging: false
       })

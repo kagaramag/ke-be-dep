@@ -40,11 +40,11 @@ export default class TutoringController {
     );
     return !tutoring.error
       ? res.status(status.OK).json({
-          tutoring
-        })
+        tutoring
+      })
       : res.status(status.SERVER_ERROR).json({
-          errors: tutoring.error
-        });
+        errors: tutoring.error
+      });
   }
 
   /**
@@ -56,11 +56,11 @@ export default class TutoringController {
     const tutoring = await Tutoring.findOne({ id: req.params.id });
     return !tutoring.error
       ? res.status(status.OK).json({
-          tutoring: tutoring.dataValues
-        })
+        tutoring: tutoring.dataValues
+      })
       : res.status(status.SERVER_ERROR).json({
-          errors: tutoring.error
-        });
+        errors: tutoring.error
+      });
   }
 
   /**
@@ -84,15 +84,15 @@ export default class TutoringController {
     const tutoring = await Tutoring.action(
       req.user.role === 'tutor'
         ? {
-            tutorId: req.user.id,
-            tuteeId: req.body.tuteeId,
-            action
-          }
+          tutorId: req.user.id,
+          tuteeId: req.body.tuteeId,
+          action
+        }
         : {
-            tuteeId: req.body.tuteeId,
-            tutorId: req.body.tutorId,
-            action
-          }
+          tuteeId: req.body.tuteeId,
+          tutorId: req.body.tutorId,
+          action
+        }
     );
 
     if (tutoring.errors) {

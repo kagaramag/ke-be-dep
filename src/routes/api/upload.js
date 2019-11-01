@@ -11,7 +11,6 @@ const upload = Router();
 upload.post(
   '/upload',
   verifyToken,
-
   multerUploads.array('image', 1),
   asyncHandler(UploadController.save)
 );

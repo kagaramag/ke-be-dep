@@ -1,9 +1,9 @@
-import Joi from "joi";
+import Joi from 'joi';
 
-export default input => {
+export default (input) => {
   const schema = Joi.object().keys({
     experience: Joi.string().optional(),
-    language: Joi.string().optional()
+    language: Joi.Joi.array().items(Joi.string()).optional()
   });
   return Joi.validate(input, schema, { abortEarly: false });
 };

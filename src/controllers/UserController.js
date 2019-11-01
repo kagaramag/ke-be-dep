@@ -59,12 +59,12 @@ export default class UserController {
 
     return tutors.length
       ? res.status(status.OK).json({
-          tutors: tutors.map(tutor => delete tutor.user.password && tutor.user)
-        })
+        tutors: tutors.map(tutor => delete tutor.user.password && tutor.user)
+      })
       : res.status(status.NOT_FOUND).json({
-          tutors: [],
-          message: req.polyglot.t('noTutor')
-        });
+        tutors: [],
+        message: req.polyglot.t('noTutor')
+      });
   }
 
   /**
@@ -77,7 +77,7 @@ export default class UserController {
     const users = await User.getAllUser({}, offset, limit);
 
     return res.status(status.OK).json({
-      users: users.map(user => {
+      users: users.map((user) => {
         const { password, ...userInfo } = user.get();
         return userInfo;
       })
@@ -100,8 +100,8 @@ export default class UserController {
     return user
       ? res.status(status.OK).json({ user })
       : res
-          .status(status.NOT_FOUND)
-          .json({ errors: { user: req.polyglot.t('userNotFound') } });
+        .status(status.NOT_FOUND)
+        .json({ errors: { user: req.polyglot.t('userNotFound') } });
   }
 
   /**
@@ -160,13 +160,13 @@ export default class UserController {
     if (follow.errors) {
       return follow.errors.name === 'SequelizeUniqueConstraintError'
         ? res.status(status.EXIST).send({
-            errors: {
-              follow: ` ${req.polyglot.t('followAlready')}  "${username}"`
-            }
-          })
+          errors: {
+            follow: ` ${req.polyglot.t('followAlready')}  "${username}"`
+          }
+        })
         : res
-            .status(status.SERVER_ERROR)
-            .json({ errors: req.polyglot.t('serverError') });
+          .status(status.SERVER_ERROR)
+          .json({ errors: req.polyglot.t('serverError') });
     }
     return res.status(status.CREATED).json({
       message: `${req.polyglot.t('following')} ${checkUser.username}`,
@@ -195,14 +195,14 @@ export default class UserController {
     }
     return hasUnfollowed
       ? res.status(status.OK).json({
-          message: `${req.polyglot.t('unfollow')} ${username}`,
-          followed: checkUser.id
-        })
+        message: `${req.polyglot.t('unfollow')} ${username}`,
+        followed: checkUser.id
+      })
       : res.status(status.BAD_REQUEST).json({
-          errors: {
-            follow: `${req.polyglot.t('notfollowing')} "${username}"`
-          }
-        });
+        errors: {
+          follow: `${req.polyglot.t('notfollowing')} "${username}"`
+        }
+      });
   }
 
   /**
@@ -216,14 +216,14 @@ export default class UserController {
     const followers = await User.follow.getAll({ followed: id });
     return followers.length
       ? res.status(status.OK).json({
-          message: 'Followers',
-          followers: followers.map(
-            follower => delete follower.get().followedUser && follower
-          )
-        })
+        message: 'Followers',
+        followers: followers.map(
+          follower => delete follower.get().followedUser && follower
+        )
+      })
       : res.status(status.NOT_FOUND).json({
-          errors: { follows: req.polyglot.t('followers') }
-        });
+        errors: { follows: req.polyglot.t('followers') }
+      });
   }
 
   /**

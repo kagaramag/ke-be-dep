@@ -6,7 +6,8 @@ import updateEmail from './updateEmail';
 import terminated from './terminated';
 import request_cancel from './request_cancel';
 import requested from './requested';
+import accepted from './accepted';
 
 export {
-  notification, updateEmail, signup, resetPassword, terminated, request_cancel, requested
+  notification, updateEmail, signup, resetPassword, terminated, request_cancel, requested, accepted
 };

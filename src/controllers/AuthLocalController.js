@@ -136,7 +136,7 @@ export default class AuthLocalController {
   static async activate(req, res) {
     const { user } = req;
     await User.update({ isActive: true }, { email: user.email });
-    return res.redirect(`${(CI && travis) || appUrl}/login`);
+    return res.redirect(`${(CI && travis) || appUrl}/en/login`);
   }
 
   /**

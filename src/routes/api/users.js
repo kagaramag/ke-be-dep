@@ -15,7 +15,6 @@ const router = Router();
 router.put(
   '/',
   verifyToken,
-  checkUpdateUserPermission,
   validateUser,
   checkUpdateUser,
   UserController.update

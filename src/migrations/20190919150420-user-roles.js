@@ -8,7 +8,8 @@ export default {
     },
     role: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     actions: {
       type: Sequelize.STRING,

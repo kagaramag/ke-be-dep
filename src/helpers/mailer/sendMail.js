@@ -23,10 +23,11 @@ export default async (to, action, data) => {
     subject: notifier.subject,
     fromname: 'Keetela - Igniting minds for success',
     text: 'Keetela',
-    html: `<div style="width:100%;background:#efefef;font-family:">
+    html: `<div style="width:100%;background:#efefef;font-family:'Open Sans', sans-serif;font-weight:300">
     <!-- HEADER -->
-    <div style="text-align:center;padding:10px 25px;color:#878787">
-       <div style="font-weight:800;color:#304894;font-size:33px;text-align:center">Keetela</div>
+    <div style="padding:10px 25px;">
+       <img src="https://res.cloudinary.com/ninjas/image/upload/v1572621122/GILLES_BUSINESS_CARD_1_2_zqymjv.png"
+       style="width:100%;max-width:300px;height:auto;margin:15px auto;display:block;" alt="Keetela"
     </div>
     <!-- BODY -->
     <div style="max-width:700px;background:#ffffff;width:96%;margin:15px auto;font-size:16px;display:block;border:1px solid #cdcdcd;border-top:none;border-radius:0 0 10px 10px;padding:0;box-shadow:0 0 25px rgba(0,0,0,0.17)">
