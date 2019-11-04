@@ -1,19 +1,20 @@
-import * as User from "./users";
-import * as Article from "./articles";
-import * as Token from "./tokens";
-import * as Tag from "./tags";
-import * as Rating from "./ratings";
-import * as Notification from "./notifications";
-import * as Chat from "./chats";
-import * as Gallery from "./gallery";
-import { getAllRatings, createRatings } from "./readingStats";
-import * as UserRole from "./userRoles";
-import * as Education from "./education";
-import * as Kid from "./kids";
-import * as Tutoring from "./tutoring";
-import * as Tutorship from "./tutorship";
-import * as Location from "./location";
-import * as Legal from "./legal";
+import * as User from './users';
+import * as Article from './articles';
+import * as Token from './tokens';
+import * as Tag from './tags';
+import * as Rating from './ratings';
+import * as Notification from './notifications';
+import * as Chat from './chats';
+import * as Gallery from './gallery';
+import { getAllRatings, createRatings } from './readingStats';
+import * as UserRole from './userRoles';
+import * as Education from './education';
+import * as Kid from './kids';
+import * as Tutoring from './tutoring';
+import * as Tutorship from './tutorship';
+import * as Location from './location';
+import * as Legal from './legal';
+import * as TutorDetails from './tutorDetails';
 
 export {
   User,
@@ -32,5 +33,6 @@ export {
   Tutoring,
   Tutorship,
   Location,
-  Legal
+  Legal,
+  TutorDetails
 };
