@@ -39,7 +39,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false
       },
       certificate: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('Bachelor', 'Advanced diploma', 'Diploma'),
         allowNull: false
       },
       createdAt: {
@@ -53,7 +53,7 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Education.associate = (models) => {
+  Education.associate = models => {
     Education.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
   };
   return Education;

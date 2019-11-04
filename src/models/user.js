@@ -1,9 +1,9 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 export default (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
+  const User = sequelize.define('User', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -46,11 +46,11 @@ export default (sequelize, DataTypes) => {
       defaultValue: false
     },
     gender: {
-      type: DataTypes.ENUM("male", "female"),
+      type: DataTypes.ENUM('male', 'female'),
       allowNull: true
     },
     accountProvider: {
-      type: DataTypes.ENUM("facebook", "twitter", "google"),
+      type: DataTypes.ENUM('facebook', 'twitter', 'google'),
       allowNull: true
     },
     accountProviderUserId: {
@@ -68,45 +68,50 @@ export default (sequelize, DataTypes) => {
   });
   User.associate = models => {
     User.hasMany(models.Article, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasMany(models.Legal, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+    User.hasOne(models.TutorDetails, {
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasMany(models.Comment, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasOne(models.Token, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasOne(models.Location, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasOne(models.UserRole, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     User.hasMany(models.Kid, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-      as: "kids"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      as: 'kids'
     });
     User.hasMany(models.ArticleBookmark, {
-      foreignKey: "userId",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     });
   };
   return User;

@@ -1,6 +1,6 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Legals", {
+    queryInterface.createTable('Legals', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,26 +11,22 @@ export default {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Users",
-          key: "id"
+          model: 'Users',
+          key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       status: {
-        type: Sequelize.ENUM("pending", "approved", "rejected"),
+        type: Sequelize.ENUM('pending', 'approved', 'rejected'),
         allowNull: true,
-        defaultValue: "pending"
+        defaultValue: 'pending'
       },
-      language: {
+      seniorFive: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      experience: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      bulletin: {
+      seniorSix: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -51,5 +47,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable("Legals")
+  down: queryInterface => queryInterface.dropTable('Legals')
 };
