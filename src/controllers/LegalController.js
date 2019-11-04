@@ -1,5 +1,5 @@
 import status from '../config/status';
-import { Legal, User } from '../queries';
+import { Legal, User, TutorDetails } from '../queries';
 
 export default class LegalController {
   static async upload(req, res) {
@@ -9,6 +9,11 @@ export default class LegalController {
     const diploma = req.files && req.files[2];
     const passport = req.files && req.files[3];
     const cv = req.files && req.files[4];
+    await TutorDetails.create({
+      userId: id,
+      experience: req.body.experience,
+      language: req.body.language
+    });
     const legalForm = await Legal.create({
       userId: id,
       status: 'pending',
