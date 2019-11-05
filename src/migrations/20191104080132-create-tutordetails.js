@@ -1,6 +1,7 @@
-export default {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Education', {
+'use strict';
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('TutorDetails', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,24 +18,23 @@ export default {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      certificate: {
-        type: Sequelize.ENUM('Bachelor', 'Advanced diploma', 'Diploma'),
+      ranking: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      language: {
+        type: Sequelize.ENUM(
+          'Kinyarwanda',
+          'French',
+          'English',
+          'Kinyarwanda, French',
+          'Kinyarwanda, English',
+          'Kinyarwanda, French, English',
+          'French, English'
+        ),
         allowNull: false
       },
-      graduated: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
-      yearOfGraduation: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-
-      institution: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      course: {
+      experience: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -46,6 +46,9 @@ export default {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }),
-  down: queryInterface => queryInterface.dropTable('Education')
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('TutorDetails');
+  }
 };

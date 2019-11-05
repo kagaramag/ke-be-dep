@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const Legal = sequelize.define(
-    "Legal",
+    'Legal',
     {
       id: {
         allowNull: false,
@@ -12,26 +12,23 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Users",
-          key: "id"
+          model: 'Users',
+          key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       status: {
-        type: DataTypes.ENUM("pending", "approved", "rejected"),
+        type: DataTypes.ENUM('pending', 'approved', 'rejected'),
         allowNull: true,
-        defaultValue: "pending"
+        defaultValue: 'pending'
       },
-      language: {
+
+      seniorFive: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      experience: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      bulletin: {
+      seniorSix: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -59,7 +56,7 @@ export default (sequelize, DataTypes) => {
     {}
   );
   Legal.associate = models => {
-    Legal.belongsTo(models.User, { foreignKey: "userId" });
+    Legal.belongsTo(models.User, { foreignKey: 'userId' });
   };
   return Legal;
 };

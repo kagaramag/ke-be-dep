@@ -21,15 +21,11 @@ export default {
       allowNull: true,
       defaultValue: 'pending'
     },
-    language: {
+    seniorFive: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    experience: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-    bulletin: {
+    seniorSix: {
       type: Sequelize.STRING,
       allowNull: false
     },

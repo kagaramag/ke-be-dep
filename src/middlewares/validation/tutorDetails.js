@@ -1,10 +1,10 @@
-import Error from "../../helpers/errorHandler";
-import * as validate from "../../helpers";
+import Error from '../../helpers/errorHandler';
+import * as validate from '../../helpers';
 
 /**
- * A class to handle actions performed on legal document submission
+ * A class to handle actions performed on tutor details submission
  */
-class legal {
+class tutorDetails {
   /**
    * @param {object} req Request sent to the route
    * @param {object} res Response from server
@@ -12,7 +12,7 @@ class legal {
    * @returns {object} Object representing the response returned
    */
   static create(req, res, next) {
-    const result = validate.validation.createLegalForm(req.body);
+    const result = validate.validation.createTutorDetailsForm(req.body);
     if (result.error) {
       return Error.joiErrorHandler(res, result);
     }
@@ -20,4 +20,4 @@ class legal {
   }
 }
 
-export default legal;
+export default tutorDetails;
