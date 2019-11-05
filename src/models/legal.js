@@ -55,7 +55,7 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Legal.associate = models => {
+  Legal.associate = (models) => {
     Legal.belongsTo(models.User, { foreignKey: 'userId' });
   };
   return Legal;
