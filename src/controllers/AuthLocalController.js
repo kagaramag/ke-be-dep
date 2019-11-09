@@ -21,18 +21,16 @@ export default class AuthLocalController {
     const { email, firstName, lastName } = req.body;
     req.body.password = helper.password.hash(req.body.password);
     const newUser = await User.create(req.body);
-    const errors = newUser.errors
-      ? helper.checkCreateUpdateUserErrors(newUser.errors)
-      : null;
+    const errors = newUser.errors ? helper.checkCreateUpdateUserErrors(newUser.errors) : null;
 
     return errors
       ? res.status(errors.code).json({ errors: errors.errors })
       : (await helper.sendMail(email, 'signup', {
-          email,
-          firstName,
-          lastName
-        })) &&
-          res.status(status.CREATED).json({
+        email,
+        firstName,
+        lastName
+      }))
+          && res.status(status.CREATED).json({
             message: req.polyglot.t('signupSuccessful'),
             user: newUser
           });
@@ -50,10 +48,7 @@ export default class AuthLocalController {
     checkUser = await User.findOne({ email });
     const checkUserRole = await UserRole.findOne({ userId: checkUser.id });
     if (Object.keys(checkUser).length > 0) {
-      const comparePassword = helper.password.compare(
-        password,
-        checkUser.password || ''
-      );
+      const comparePassword = helper.password.compare(password, checkUser.password || '');
       if (!comparePassword) {
         return res.status(status.UNAUTHORIZED).json({
           errors: { credentials: req.polyglot.t('incorrectCredentials') }
@@ -85,12 +80,8 @@ export default class AuthLocalController {
     const { id } = req.params;
     const deactivateAccount = await User.update({ isActive: false }, { id });
     return deactivateAccount
-      ? res
-          .status(status.OK)
-          .json({ message: req.polyglot.t('deactivateAccount'), userId: id })
-      : res
-          .status(status.UNAUTHORIZED)
-          .json({ errors: req.polyglot.t('noAccess') });
+      ? res.status(status.OK).json({ message: req.polyglot.t('deactivateAccount'), userId: id })
+      : res.status(status.UNAUTHORIZED).json({ errors: req.polyglot.t('noAccess') });
   }
 
   /**
@@ -106,10 +97,10 @@ export default class AuthLocalController {
     return Object.keys(fetchUser).length
       ? res.status(status.OK).json({ user: fetchUser })
       : res.status(status.NOT_FOUND).json({
-          errors: {
-            user: req.polyglot.t('userNotFound')
-          }
-        });
+        errors: {
+          user: req.polyglot.t('userNotFound')
+        }
+      });
   }
 
   /**
@@ -145,7 +136,7 @@ export default class AuthLocalController {
   static async activate(req, res) {
     const { user } = req;
     await User.update({ isActive: true }, { email: user.email });
-    return res.redirect(`${(CI && travis) || appUrl}/login`);
+    return res.redirect(`${(CI && travis) || appUrl}/en/login`);
   }
 
   /**
@@ -184,44 +175,27 @@ export default class AuthLocalController {
     const { passwordOne, passwordTwo } = req.body;
 
     if (passwordOne !== passwordTwo) {
-      return res
-        .status(status.BAD_REQUEST)
-        .json({ errors: req.polyglot.t('passwordNotMatching') });
+      return res.status(status.BAD_REQUEST).json({ errors: req.polyglot.t('passwordNotMatching') });
     }
 
     if (!req.body.passwordOne || !req.body.passwordTwo) {
-      return res
-        .status(status.BAD_REQUEST)
-        .json({ errors: req.polyglot.t('passEmpty') });
+      return res.status(status.BAD_REQUEST).json({ errors: req.polyglot.t('passEmpty') });
     }
 
-    const isPasswordValid = validate.password(
-      passwordOne,
-      req.polyglot.t('required')
-    );
-    const isPasswordValidTwo = validate.password(
-      passwordTwo,
-      req.polyglot.t('required')
-    );
+    const isPasswordValid = validate.password(passwordOne, req.polyglot.t('required'));
+    const isPasswordValidTwo = validate.password(passwordTwo, req.polyglot.t('required'));
 
     if (isPasswordValid.length || isPasswordValidTwo.length) {
-      return res
-        .status(status.BAD_REQUEST)
-        .json({ message: isPasswordValid[0] });
+      return res.status(status.BAD_REQUEST).json({ message: isPasswordValid[0] });
     }
     const { email } = helper.token.decode(token);
-    const isUpdated = await User.update(
-      { password: helper.password.hash(passwordOne) },
-      { email }
-    );
+    const isUpdated = await User.update({ password: helper.password.hash(passwordOne) }, { email });
     delete isUpdated.password;
     return isUpdated
       ? res.status(status.OK).json({
-          isUpdated,
-          message: req.polyglot.t('passChanged')
-        })
-      : res
-          .status(status.NOT_MODIFIED)
-          .json({ errors: req.polyglot.t('passNotChanged') });
+        isUpdated,
+        message: req.polyglot.t('passChanged')
+      })
+      : res.status(status.NOT_MODIFIED).json({ errors: req.polyglot.t('passNotChanged') });
   }
 }

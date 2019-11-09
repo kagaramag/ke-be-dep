@@ -18,16 +18,16 @@ export default class UploadController {
     const image = req.files && req.files[0];
     let updated = '';
     if (
-      typeof image === 'object' &&
-      typeof image !== 'boolean' &&
-      NODE_ENV !== 'test'
+      typeof image === 'object'
+      && typeof image !== 'boolean'
+      && NODE_ENV !== 'test'
     ) {
       await Gallery.save({
         image: `${image.version}${image.public_id}.${image.format}`,
         userId: req.user.id
       });
 
-      updated = `${IMAGE_BASE_URL}v${image.version}/${image.public_id}.${image.format}`;
+      updated = `${IMAGE_BASE_URL}/c_thumb,h_320,w_320/v${image.version}/${image.public_id}.${image.format}`;
 
       await User.update({ image: updated }, { id: req.user.id });
 
@@ -39,11 +39,10 @@ export default class UploadController {
           circle: `${IMAGE_BASE_URL}/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:262c35/v${image.version}/${image.public_id}.${image.format}`
         }
       });
-    } else {
-      res.status(status.BAD_REQUEST).json({
-        errors: { image: 'sorry, you did not provide image to be uploaded' }
-      });
     }
+    res.status(status.BAD_REQUEST).json({
+      errors: { image: 'sorry, you did not provide image to be uploaded' }
+    });
   }
 
   /**

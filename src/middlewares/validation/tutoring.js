@@ -12,7 +12,7 @@ class tutoring {
    * @returns {object} Object representing the response returned
    */
   static create(req, res, next) {
-    const result = validate.validation.createTutoringActivities(req.body);
+    const result = validate.validation.createTutoring(req.body);
     if (result.error) {
       return Error.joiErrorHandler(res, result);
     }

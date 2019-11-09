@@ -1,5 +1,5 @@
-import Error from "../../helpers/errorHandler";
-import * as validate from "../../helpers";
+import Error from '../../helpers/errorHandler';
+import * as validate from '../../helpers';
 
 /**
  * A class to handle actions performed on location

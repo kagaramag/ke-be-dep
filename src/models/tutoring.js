@@ -1,3 +1,8 @@
+import {
+  sendMail
+} from '../helpers';
+
+
 export default (sequelize, DataTypes) => {
   const Tutoring = sequelize.define(
     'Tutoring',
@@ -29,7 +34,7 @@ export default (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
       status: {
-        type: DataTypes.ENUM('requested', 'accepted', 'rejected', 'terminated'),
+        type: DataTypes.ENUM('requested', 'accepted', 'request_cancel', 'rejected', 'canceled', 'terminated'),
         allowNull: false,
         defaultValue: 'requested'
       },
@@ -43,7 +48,15 @@ export default (sequelize, DataTypes) => {
       }
     },
     {
-      freezeTableName: true
+      freezeTableName: true,
+      hooks: {
+        afterUpdate: async (tutoring) => {
+          sendMail(null, tutoring.status, tutoring);
+        },
+        afterCreate: async (tutoring) => {
+          sendMail(null, tutoring.status, tutoring);
+        },
+      }
     }
   );
   Tutoring.associate = (models) => {

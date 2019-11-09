@@ -1,5 +1,4 @@
-import Error from '../../helpers/errorHandler';
-import * as validate from '../../helpers';
+import status from '../../config/status';
 
 /**
  * A class to handle actions performed on tutor details submission
@@ -12,9 +11,10 @@ class tutorDetails {
    * @returns {object} Object representing the response returned
    */
   static create(req, res, next) {
-    const result = validate.validation.createTutorDetailsForm(req.body);
-    if (result.error) {
-      return Error.joiErrorHandler(res, result);
+    if (!req.file) {
+      return res.status(status.BAD_REQUEST).json({
+        error: 'Files can\'t be empty'
+      });
     }
     next();
   }

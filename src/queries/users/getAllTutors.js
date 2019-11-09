@@ -10,12 +10,17 @@ export default async (role, offset, limit) => {
       where: { roleId: roleId.dataValues.id },
       offset,
       limit,
-      attributes: [],
       include: [
         {
           model: db.User,
-          as: 'user'
+          as: 'user',
+          attributes: {
+            exclude: ['password', 'accountProvider', 'accountProviderUserId']
+          },
         }
+      ],
+      order: [
+        ['id', 'DESC']
       ],
       logging: false
     });

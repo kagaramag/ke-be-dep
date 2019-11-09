@@ -1,6 +1,6 @@
-import "dotenv/config";
-import { Location } from "../queries";
-import status from "../config/status";
+import 'dotenv/config';
+import { Location } from '../queries';
+import status from '../config/status';
 
 /**
  * A class to handle User Location
@@ -19,11 +19,11 @@ export default class LocationController {
 
     return location.errors
       ? res.status(status.SERVER_ERROR).json({
-          errors: location.errors.errors[0].message
-        })
+        errors: location.errors.errors[0].message
+      })
       : res.status(status.CREATED).json({
-          location
-        });
+        location
+      });
   }
 
   /**
@@ -36,10 +36,10 @@ export default class LocationController {
 
     return !location.error
       ? res.status(status.OK).json({
-          location
-        })
+        location
+      })
       : res.status(status.SERVER_ERROR).json({
-          errors: location.error
-        });
+        errors: location.error
+      });
   }
 }

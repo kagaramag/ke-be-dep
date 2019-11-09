@@ -1,4 +1,5 @@
-'use strict';
+
+
 module.exports = (sequelize, DataTypes) => {
   const TutorDetails = sequelize.define(
     'TutorDetails',
@@ -24,15 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       language: {
-        type: DataTypes.ENUM(
-          'Kinyarwanda',
-          'French',
-          'English',
-          'Kinyarwanda, French',
-          'Kinyarwanda, English',
-          'Kinyarwanda, French, English',
-          'French, English'
-        ),
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
       },
       experience: {
@@ -42,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  TutorDetails.associate = models => {
+  TutorDetails.associate = (models) => {
     TutorDetails.belongsTo(models.User, { foreignKey: 'userId' });
   };
   return TutorDetails;

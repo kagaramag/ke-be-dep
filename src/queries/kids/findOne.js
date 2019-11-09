@@ -5,9 +5,20 @@ import db from '../../models';
  * @returns {object} Object representing the response returned
  */
 export default async (where) => {
+  where = { ...where };
   try {
     const response = await db.Kid.findOne({
       where,
+      include: [
+        {
+          model: db.User,
+          as: 'parent',
+          attributes: {
+            exclude: ['password', 'bio', 'accountProvider', 'accountProviderUserId']
+          }
+        }
+      ],
+      plain: true,
       logging: false
     });
     return response;

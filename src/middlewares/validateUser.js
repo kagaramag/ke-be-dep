@@ -25,6 +25,8 @@ export default async (req, res, next) => {
       errors[key] = errors[key] || validatedField;
     }
   });
-
-  return Object.keys(errors).length ? res.status(status.BAD_REQUEST).json({ errors }) : next();
+  if (Object.keys(errors).length) {
+    return res.status(status.BAD_REQUEST).json({ errors });
+  }
+  next();
 };

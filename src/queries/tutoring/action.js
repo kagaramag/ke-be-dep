@@ -13,7 +13,10 @@ export default async (data) => {
           tuteeId: data.tuteeId,
           tutorId: data.tutorId
         },
-        logging: false
+        returning: true,
+        lain: true,
+        logging: false,
+        individualHooks: true
       }
     );
     return response;

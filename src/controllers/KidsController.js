@@ -30,6 +30,7 @@ export default class KidsController {
       });
     }
     return res.status(status.CREATED).json({
+      message: `You have registered ${kid.names} successfully.`,
       kid
     });
   }
@@ -43,10 +44,30 @@ export default class KidsController {
     const kids = await Kid.findAll({ userId: req.user.id });
     return !kids.error
       ? res.status(status.OK).json({
-          kids
-        })
+        message: kids.length ? 'You have fetched kids successfully.' : 'Sorry, you did not register a kid yet.',
+        kids
+      })
       : res.status(status.SERVER_ERROR).json({
-          errors: kids.error
-        });
+        errors: kids.error
+      });
+  }
+
+  /**
+   * @param  {object} req contains server request info
+   * @param  {object} res contains server response
+   * @return {object} return an object containing the kids info
+   */
+  static async updateKid(req, res) {
+    // NB: we don't delete data, we just change their status, and hide them to users
+    const data = Object.keys(req.body) && Object.keys(req.body).length ? req.body : { status: 'inactive' };
+    const response = await Kid.update({ id: req.params.id }, data);
+    return !response.error && response && response[1]
+      ? res.status(status.OK).json({
+        kid: response[1].dataValues.status === 'active' ? response[1].dataValues : {},
+        message: `You have successfully ${response[1].dataValues.status === 'active' ? `edited the information of ${response[1].dataValues.names}` : `deleted ${response[1].dataValues.names}`}`
+      })
+      : res.status(status.SERVER_ERROR).json({
+        errors: { error: 'Sorry, you can\'t perform this action at this time. try again later' }
+      });
   }
 }

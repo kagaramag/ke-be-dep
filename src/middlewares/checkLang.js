@@ -4,7 +4,6 @@ import { messages } from '../i18n';
 exports.runPolyglot = (req, res, next) => {
   const locale = req.locale.language;
 
-  console.log(locale);
   req.polyglot = new Polyglot();
 
   // fr is for kinyarwanda translations

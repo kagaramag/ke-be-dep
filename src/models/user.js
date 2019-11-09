@@ -66,7 +66,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   });
-  User.associate = models => {
+  User.associate = (models) => {
     User.hasMany(models.Article, {
       foreignKey: 'userId',
       onUpdate: 'CASCADE',
@@ -94,6 +94,11 @@ export default (sequelize, DataTypes) => {
     });
     User.hasOne(models.Location, {
       foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+    User.hasOne(models.Mail, {
+      foreignKey: 'receiverId',
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });
