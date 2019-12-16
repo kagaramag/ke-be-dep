@@ -1,5 +1,6 @@
 import db from '../../models';
-// import { generator } from '../../helpers';
+// eslint-disable-next-line import/no-cycle
+import { generator } from '../../helpers';
 /**
  * @param {object} user
  * @returns {object} an object containing the information of the user or null
@@ -7,10 +8,10 @@ import db from '../../models';
 export default async (user = {}) => {
   try {
     let newUser = {};
-    // const username = await generator.username(user.firstName, user.lastName);
+    const slug = await generator.generateUsername(5);
     user = {
       ...user,
-      username: `${user.firstName.toLowerCase()}.${user.lastName.toLowerCase()}`
+      username: `${(user.firstName).toLowerCase()}-${slug}`
     };
     newUser = await db.User.create(user, { logging: false });
     // Assign a role to a given user

@@ -5,7 +5,8 @@ import {
   checkCreateUpdateUserErrors,
   sendMail,
   token as tokenHelper,
-  urlHelper
+  urlHelper,
+  users
 } from '../helpers';
 
 const { CI } = process.env;
@@ -91,14 +92,17 @@ export default class UserController {
    */
   static async getAllByUsername(req, res) {
     const { username } = req.params;
-    const { offset, limit } = req.query;
-    const user = await User.getUserByUsername(username, offset, limit);
-    delete user.password;
-    delete user.isActive;
-    delete user.accountProvider;
-    delete user.accountProviderUserId;
-    return user
-      ? res.status(status.OK).json({ user })
+    // helper: get all user information
+    const response = await users.getAllUserInfo(username);
+    return response && response.user
+      ? res.status(status.OK).json({
+        user: response.user,
+        articles: response.articles || null,
+        kids: response.kids || null,
+        education: response.education || null,
+        legal: response.legal || null,
+        location: response.location || null,
+      })
       : res
         .status(status.NOT_FOUND)
         .json({ errors: { user: req.polyglot.t('userNotFound') } });

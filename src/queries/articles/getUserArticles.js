@@ -8,12 +8,12 @@ import db from '../../models';
  * @returns {object} Object representing the response returned
  */
 export default async (limit, offset, condition = {}) => {
-  const { userId, status } = condition;
+  const { userId } = condition;
   let response = [];
   response = await db.Article.findAll({
     limit,
     offset,
-    where: { userId, status },
+    where: { userId, status: { [db.Op.notIn]: ['deleted'] } },
     order: [['id', 'DESC']],
     logging: false
   });

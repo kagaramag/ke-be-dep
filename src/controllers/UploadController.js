@@ -18,18 +18,33 @@ export default class UploadController {
     const image = req.files && req.files[0];
     let updated = '';
     if (
-      typeof image === 'object'
-      && typeof image !== 'boolean'
-      && NODE_ENV !== 'test'
+      typeof image === 'object' &&
+      typeof image !== 'boolean' &&
+      NODE_ENV !== 'test'
     ) {
-      await Gallery.save({
-        image: `${image.version}${image.public_id}.${image.format}`,
-        userId: req.user.id
-      });
-
       updated = `${IMAGE_BASE_URL}/c_thumb,h_320,w_320/v${image.version}/${image.public_id}.${image.format}`;
 
-      await User.update({ image: updated }, { id: req.user.id });
+      switch (req.params.type) {
+        case 'article':
+          await Gallery.save({
+            image: `${image.version}${image.public_id}.${image.format}`,
+            userId: req.user.id
+          });
+          break;
+        case 'coverUrl':
+          // image: `${image.version}${image.public_id}.${image.format}`,
+          // userId: req.user.id
+          await Article.update(
+            { coverUrl: `${image.version}${image.public_id}.${image.format}` },
+            req.query.slug
+          );
+          break;
+        case 'profile':
+          await User.update({ image: updated }, { id: req.user.id });
+          break;
+        default:
+          break;
+      }
 
       return res.status(status.CREATED).json({
         image: {

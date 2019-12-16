@@ -1,21 +1,21 @@
-import Joi from "joi";
+import Joi from 'joi';
 
-export default input => {
+export default (input) => {
   const schema = Joi.object().keys({
     firstName: Joi.string()
       .min(2)
       .max(45)
       .required()
-      .label("First name"),
+      .label('First name'),
     gender: Joi.string()
-      .min(4)
-      .max(45)
-      .optional(),
+      .valid(['male', 'female'])
+      .required()
+      .label('Gender'),
     lastName: Joi.string()
       .min(2)
       .max(45)
       .required()
-      .label("Last name"),
+      .label('Last name'),
     email: Joi.string()
       .min(5)
       .max(100)
@@ -27,7 +27,9 @@ export default input => {
       .min(8)
       .max(100)
       .required(),
-    role: Joi.number().optional(),
+    role: Joi.number()
+      .valid([1, 2, 3, 4, 5])
+      .optional(),
     permissions: Joi.object().optional()
   });
 

@@ -13,6 +13,7 @@ import sendMail from './mailer';
 import isActiveUser from './isActiveUser';
 import * as urlHelper from './urlHelper';
 import articles from './articles';
+import users from './users';
 
 export {
   isUser,
@@ -30,4 +31,5 @@ export {
   isActiveUser,
   urlHelper,
   articles,
+  users
 };

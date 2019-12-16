@@ -37,6 +37,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false
       },
+      category: {
+        type: DataTypes.ENUM('help', 'blog', 'faqs'),
+        allowNull: false
+      },
       tagList: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true
@@ -63,14 +67,6 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
-      },
-      likes: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
-      dislikes: {
-        allowNull: true,
-        type: DataTypes.INTEGER
       },
       rating: {
         type: DataTypes.INTEGER,

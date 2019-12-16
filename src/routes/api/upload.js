@@ -9,7 +9,7 @@ import checkPermissions from '../../middlewares/checkPermissions';
 
 const upload = Router();
 upload.post(
-  '/upload',
+  '/upload/:type',
   verifyToken,
   multerUploads.array('image', 1),
   asyncHandler(UploadController.save)

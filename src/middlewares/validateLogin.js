@@ -17,10 +17,10 @@ export default async (req, res, next) => {
   Object.keys(errors).forEach(key => errors[key] || delete errors[key]);
 
   return (
-    (Object.keys(errors).length
-      && res.status(status.BAD_REQUEST).json({
+    (Object.keys(errors).length &&
+      res.status(status.BAD_REQUEST).json({
         errors
-      }))
-    || next()
+      })) ||
+    next()
   );
 };

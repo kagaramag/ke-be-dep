@@ -15,10 +15,11 @@ export default async (req, res, next) => {
   }
 
   Object.keys(req.body).forEach((key) => {
-    const validatedField = (['firstName', 'lastName', 'type'].includes(key)
+    const validatedField = (['firstName', 'lastName', 'type', 'gender'].includes(key)
         && validate.name(req.body[key], null, key))
       || (key === 'email' && validate.email(req.body.email, 'required')[0])
       || (key === 'password' && validate.password(req.body.password, 'required')[0])
+      || (key === 'gender' && validate.password(req.body.password, 'required')[0])
       || null;
 
     if (validatedField && validatedField !== true) {

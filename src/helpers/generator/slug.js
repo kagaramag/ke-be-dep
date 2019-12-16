@@ -1,3 +1,3 @@
 import uniqid from 'uniqid';
 
-export default () => uniqid.process();
+export default number => uniqid.process().substring(0, number);

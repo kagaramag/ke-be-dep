@@ -9,9 +9,11 @@ import * as filters from '../../helpers/searchArticleFilters';
  * @returns {object} Object representing the response returned
  */
 export default async (limit, offset, condition = {}) => {
-  const where = filters.filterQueryBuilder(condition);
-  let response = [];
-  response = await db.Article.findAll({
+  let where = filters.filterQueryBuilder(condition);
+  if (condition.userId) {
+    where = { ...where, userId: condition.userId };
+  }
+  const response = await db.Article.findAll({
     limit,
     offset,
     where,

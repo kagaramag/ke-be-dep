@@ -22,12 +22,11 @@ export default class ArticleController {
       title: req.body.title ? req.body.title.trim() : '',
       description: req.body.description ? req.body.description.trim() : '',
       body: req.body.body.trim(),
+      category: req.body.category || 'blog',
       coverUrl,
       tagList,
       readTime: helpers.generator.readtime(req.body.body),
-      likes: 0,
-      status: 'published',
-      dislikes: 0
+      status: req.body.status || 'published',
     });
     return res.status(status.CREATED).send({
       article
@@ -66,21 +65,20 @@ export default class ArticleController {
    * @param {object} res Response from server
    * @returns {object} Object representing the response returned
    */
-  static async userArticleDrafts(req, res) {
+  static async userArticles(req, res) {
     const { limit, offset } = req.query;
     const { id } = req.user;
-    const drafts = await Article.getUserArticles(
+    const response = await Article.getUserArticles(
       parseInt(limit, 0) || 20,
       offset || 0,
       {
         userId: id,
-        status: 'draft'
       }
     );
-    if (Object.keys(drafts).length > 0) {
-      res.status(status.OK).send({
-        articles: drafts,
-        articlesCount: drafts.length
+    if (Object.keys(response).length > 0) {
+      res.status(status.OK).json({
+        articles: response,
+        articlesCount: response.length
       });
     } else {
       res.status(status.NOT_FOUND).send({ message: 'No articles found' });

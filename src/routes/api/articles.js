@@ -15,10 +15,6 @@ const articles = Router();
 articles.post(
   '/articles',
   verifyToken,
-  checkPermissions({
-    route: 'articles',
-    action: 'create'
-  }),
   multerUploads.array('coverUrl', 1),
   validateArticle.create,
   asyncHandler(ArticleController.saveArticle)
@@ -41,13 +37,9 @@ articles.get(
   asyncHandler(ArticleController.getAllArticles)
 );
 articles.get(
-  '/articles/drafts',
+  '/articles/my-blog',
   verifyToken,
-  checkPermissions({
-    route: 'articles',
-    action: 'read'
-  }),
-  asyncHandler(ArticleController.userArticleDrafts)
+  asyncHandler(ArticleController.userArticles)
 );
 articles.get(
   '/articles/published',
@@ -81,16 +73,11 @@ articles.get(
   }),
   asyncHandler(ArticleController.getSpecificArticle)
 );
-articles.put(
+articles.patch(
   '/articles/:slug',
-  validateArticle.update,
   verifyToken,
   checkArticleBySlug,
-  checkPermissions({ route: 'articles', action: 'edit' }),
-  checkArticlePermissions({
-    normal: 'self',
-    admin: 'self'
-  }),
+  validateArticle.update,
   asyncHandler(ArticleController.update)
 );
 

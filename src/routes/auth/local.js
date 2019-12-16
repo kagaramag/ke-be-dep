@@ -5,13 +5,12 @@ import verifyToken from '../../middlewares/verifyToken';
 import validateUser from '../../middlewares/validateUser';
 import validateLogin from '../../middlewares/validateLogin';
 import isActiveUser from '../../middlewares/isActiveUser';
-// import checkSingUpPermission from '../../middlewares/checkSignUpPermission';
 
 const router = express.Router();
 
+// register new user
 router.post(
   '/signup',
-  // checkSingUpPermission,
   validateUser,
   asyncHandler(AuthLocalController.signup)
 );
