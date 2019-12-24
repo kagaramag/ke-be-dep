@@ -1,18 +1,18 @@
 import db from '../../models';
-import { getUserByUsername } from '../users';
+// import { getUserByUsername } from '../users';
 
 /**
- * @param {object} username username of tutor
+ * @param {object} where condition for all
  * @returns {object} Object representing the response returned
  */
-export default async ({ username }) => {
+export default async (where) => {
   try {
-    const user = await getUserByUsername(username);
+    // const user = await getUserByUsername(username);
     const response = await db.Education.findAll({
-      where: { userId: user.id },
+      where,
       logging: false
     });
-    return response;
+    return response ? response.dataValues : null;
   } catch (error) {
     return {
       error

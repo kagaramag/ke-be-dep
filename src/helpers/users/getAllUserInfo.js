@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import {
- User, Article, Kid, Education, Legal, Location 
+ User, Article, Kid, Education, Legal, Location
 } from '../../queries';
 
 export default async (username) => {
@@ -16,7 +16,7 @@ export default async (username) => {
   // get user kids
   const kids = await Kid.findAll({ userId: user.id });
   // get user education
-  const education = await Education.findAll({ username: user.username });
+  const education = await Education.findAll({ userId: user.id });
   // get user education
   const legal = await Legal.findOne(user.id);
   let paper;
@@ -38,7 +38,7 @@ export default async (username) => {
     articles,
     kids,
     education,
-    legal: paper,
+    legal: paper || null,
     location
   };
 };

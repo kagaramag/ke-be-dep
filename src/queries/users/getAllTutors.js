@@ -1,10 +1,10 @@
 import db from '../../models';
 
-export default async (role, offset, limit) => {
+export default async (where, offset, limit) => {
   // find all roles
   try {
     const roleId = await db.Role.findOne({
-      where: role,
+      where,
     }, { logging: false });
     const findUsers = await db.UserRole.findAll({
       where: { roleId: roleId.dataValues.id },
@@ -13,6 +13,9 @@ export default async (role, offset, limit) => {
       include: [
         {
           model: db.User,
+          where: {
+            isActive: true
+          },
           as: 'user',
           attributes: {
             exclude: ['password', 'accountProvider', 'accountProviderUserId']

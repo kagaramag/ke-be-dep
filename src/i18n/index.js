@@ -16,7 +16,7 @@ export const messages = {
     usernameNotExists: 'This user with the username does not exist',
     incorrectCredentials: 'The credentials you provided are incorrect',
     noAccess: 'Unauthorized access',
-    userNotFound: 'sorry, user not found!!',
+    userNotFound: 'sorry, user not found!',
     emailNotFound: 'email not found..',
     passwordNotMatching: 'Passwords are not matching',
     passEmpty: 'the password can not be empty',

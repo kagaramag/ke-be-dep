@@ -94,6 +94,7 @@ export default class UserController {
     const { username } = req.params;
     // helper: get all user information
     const response = await users.getAllUserInfo(username);
+    // console.log('response', response);
     return response && response.user
       ? res.status(status.OK).json({
         user: response.user,

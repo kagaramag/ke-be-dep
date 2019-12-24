@@ -10,7 +10,6 @@ import session from 'express-session';
 import passport from 'passport';
 import socketIo from 'socket.io';
 import routes from './routes';
-import * as swaggerDocument from '../swagger.json';
 import './helpers/eventListener';
 
 // this middleware helps to set language in headers
@@ -26,7 +25,7 @@ dotenv.config();
 
 app.use(
   session({
-    secret: process.env.SECRET_KEY || 'tutela',
+    secret: process.env.SECRET_KEY || 'Keetela',
     cookie: { maxAge: 60000 },
     resave: true,
     saveUninitialized: true
@@ -59,14 +58,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '../templates')));
-app.use('/mockups', express.static(path.join(__dirname, '../templates/html')));
-
-app.use(
-  '/api/v1/documentation',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument)
-);
 app.use('/api/v1/', routes);
 
 // catch 404 and forward to error handler

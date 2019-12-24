@@ -1,9 +1,13 @@
 import db from '../../models';
 
-export default async (username) => {
+export default async ({ username }) => {
+  const where = { username, isActive: true };
   try {
     const user = await db.User.findOne({
-      where: { ...username, isActive: true },
+      where,
+      attributes: {
+        exclude: ['password', 'accountProvider', 'accountProviderUserId']
+      },
       include: [
         {
           model: db.UserRole,
@@ -17,7 +21,7 @@ export default async (username) => {
       ],
       logging: false
     });
-    return user ? user.dataValues : {};
+    return user ? user.dataValues : null;
   } catch (error) {
     return {
       errors: error
