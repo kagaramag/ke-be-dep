@@ -1,6 +1,12 @@
 // eslint-disable-next-line import/no-cycle
 import {
- User, Article, Kid, Education, Legal, Location
+  User,
+  Article,
+  Kid,
+  Education,
+  Legal,
+  Location,
+  TutorDetails
 } from '../../queries';
 
 export default async (username) => {
@@ -17,17 +23,30 @@ export default async (username) => {
   const kids = await Kid.findAll({ userId: user.id });
   // get user education
   const education = await Education.findAll({ userId: user.id });
-  // get user education
+  // get user legal document
+  const details = await TutorDetails.findOne({ userId: user.id });
+  // get user legal document
   const legal = await Legal.findOne(user.id);
   let paper;
+  let checkDiploma = false;
+  if (
+    legal
+    && legal.diploma
+    && legal.diploma.length > 0
+    && legal.diploma !== 'NULL'
+  ) {
+    checkDiploma = true;
+  }
   if (legal) {
     paper = {
       id: legal.id,
       createdAt: legal.createdAt,
-      diploma: !!legal.diploma,
+      updatedAt: legal.updatedAt,
+      diploma: checkDiploma,
       passport: !!legal.passport,
       seniorFive: !!legal.seniorFive,
       seniorSix: !!legal.seniorSix,
+      cv: !!legal.cv,
       status: legal.status
     };
   }
@@ -39,6 +58,7 @@ export default async (username) => {
     kids,
     education,
     legal: paper || null,
-    location
+    location,
+    details
   };
 };

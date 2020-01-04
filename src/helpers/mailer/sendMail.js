@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import dotenv from 'dotenv';
 import mailer from '@sendgrid/mail';
 import * as template from './templates';
@@ -11,9 +12,6 @@ export default async (to, action, data) => {
   mailer.setApiKey(SENDGRID_API_KEY);
   const notifier = await template[action](data);
   const mottos = [
-    'Put your kids ahead of their peers',
-    'Put your kids on the head of their peers',
-    'Connecting student with teacher',
     'Igniting mind for success'
   ];
   const motto = mottos[Math.floor(Math.random() * mottos.length)];
@@ -41,7 +39,7 @@ export default async (to, action, data) => {
     </div>
     <div style="padding:5px 30px;text-align:center">${motto}</div>
     <div style="text-align:center;padding:10px 25px 35px 25px;color:#878787">
-       <div> &copy; Keetela 2019, <br>a Nivelo Lab Company.</div>
+       <div>  &copy;Copyright ${new Date().getFullYear()}, <b>Keetela</b> Ltd</div>
     </div>
     <!-- BODY, END -->
  </div>`

@@ -1,6 +1,6 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Users", {
+    queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,13 +11,18 @@ export default {
         type: Sequelize.STRING,
         allowNull: false
       },
-      gender: {
-        type: Sequelize.ENUM("male", "female"),
-        allowNull: true
-      },
       lastName: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      gender: {
+        type: Sequelize.ENUM('male', 'female'),
+        allowNull: true
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       username: {
         type: Sequelize.STRING,
@@ -58,5 +63,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable("Users")
+  down: queryInterface => queryInterface.dropTable('Users')
 };

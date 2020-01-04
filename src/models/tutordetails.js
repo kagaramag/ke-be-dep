@@ -1,4 +1,4 @@
-
+import availability from '../helpers/factory/availability';
 
 module.exports = (sequelize, DataTypes) => {
   const TutorDetails = sequelize.define(
@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.INTEGER,
+        unique: true,
         allowNull: false,
         references: {
           model: 'Users',
@@ -20,23 +21,44 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      ranking: {
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      verified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      ranks: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false,
+        defaultValue: 0
+      },
+      evaluation: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       language: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false
+        allowNull: true
       },
-      experience: {
-        type: DataTypes.STRING,
-        allowNull: false
+      interests: {
+        type: DataTypes.ENUM('primary', 'secondary', 'special'),
+        allowNull: true
+      },
+      availability: {
+        type: DataTypes.STRING(800),
+        allowNull: false,
+        defaultValue: availability
       }
     },
     {}
   );
   TutorDetails.associate = (models) => {
-    TutorDetails.belongsTo(models.User, { foreignKey: 'userId' });
+    TutorDetails.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
   };
   return TutorDetails;
 };

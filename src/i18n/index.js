@@ -14,7 +14,7 @@ export const messages = {
     dontfollow: "You don't follow any one",
 
     usernameNotExists: 'This user with the username does not exist',
-    incorrectCredentials: 'The credentials you provided are incorrect',
+    incorrectCredentials: 'Incorrect email or password',
     noAccess: 'Unauthorized access',
     userNotFound: 'sorry, user not found!',
     emailNotFound: 'email not found..',

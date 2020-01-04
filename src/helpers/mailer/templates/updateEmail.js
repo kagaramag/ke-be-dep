@@ -8,7 +8,7 @@ export default (data) => {
   const token = generateToken({ userId: data.userId, email: data.email }, { expiresIn: '1h' });
   const appUrl = process.env.APP_URL_BACKEND;
   const link = `${appUrl}/api/v1/users/email/confirm/${token}`;
-  message.subject = 'Update email - Authors tutela';
+  message.subject = 'Update email - Authors keetela';
   message.html = `Hello</br>,
   <p>You are receiving this because you (or someone else) have requested the reset of your current email,<br>
    Click on the link bellow to confirm the process<br>

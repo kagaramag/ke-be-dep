@@ -1,7 +1,6 @@
 import http from 'http';
 import path from 'path';
 import createError from 'http-errors';
-import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import logger from 'morgan';
 import dotenv from 'dotenv';
@@ -16,7 +15,8 @@ import './helpers/eventListener';
 import createLocale from 'express-locale';
 
 // Polyglot middleware
-import { runPolyglot } from './middlewares/checklang';
+import { runPolyglot } from './middlewares/checkLang';
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);

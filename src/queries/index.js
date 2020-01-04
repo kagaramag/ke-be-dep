@@ -15,6 +15,7 @@ import * as Tutorship from './tutorship';
 import * as Location from './location';
 import * as Legal from './legal';
 import * as TutorDetails from './tutorDetails';
+import helpers from './helpers';
 
 export {
   User,
@@ -34,5 +35,6 @@ export {
   Tutorship,
   Location,
   Legal,
-  TutorDetails
+  TutorDetails,
+  helpers
 };

@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       role: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
         allowNull: false,
         unique: true
       },

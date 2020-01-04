@@ -22,7 +22,8 @@ export default class EducationController {
       });
     }
     return res.status(status.CREATED).json({
-      education
+      education,
+      message: 'Your education background has been updated successfully.'
     });
   }
 

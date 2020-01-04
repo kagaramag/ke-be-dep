@@ -1,7 +1,7 @@
-import db from "../../models";
+import db from '../../models';
 
 /**
- * @param {int} user id
+ * @param {int} userId id
  * @returns {object} Object representing the response returned
  */
 export default async userId => {

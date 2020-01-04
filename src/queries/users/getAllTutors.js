@@ -1,13 +1,11 @@
 import db from '../../models';
 
-export default async (where, offset, limit) => {
+export default async (where = {}, offset, limit) => {
   // find all roles
   try {
-    const roleId = await db.Role.findOne({
+    let findTutors = [];
+    findTutors = await db.TutorDetails.findAndCountAll({
       where,
-    }, { logging: false });
-    const findUsers = await db.UserRole.findAll({
-      where: { roleId: roleId.dataValues.id },
       offset,
       limit,
       include: [
@@ -19,15 +17,13 @@ export default async (where, offset, limit) => {
           as: 'user',
           attributes: {
             exclude: ['password', 'accountProvider', 'accountProviderUserId']
-          },
+          }
         }
       ],
-      order: [
-        ['id', 'DESC']
-      ],
+      order: [['id', 'DESC']],
       logging: false
     });
-    return findUsers || {};
+    return findTutors || {};
   } catch (error) {
     return {
       errors: error

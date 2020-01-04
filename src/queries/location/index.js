@@ -1,4 +1,4 @@
-import create from "./create";
-import findOne from "./findOne";
+import updateOrCreate from './updateOrCreate';
+import findOne from './findOne';
 
-export { create, findOne };
+export { updateOrCreate, findOne };

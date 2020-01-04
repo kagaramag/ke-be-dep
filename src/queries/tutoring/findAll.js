@@ -27,9 +27,7 @@ export default async (id, role) => {
                 }
               ]
             }
-          ]
-        },
-        {
+          ],
           logging: false
         }
       );
@@ -54,9 +52,7 @@ export default async (id, role) => {
                 }
               ]
             }
-          ]
-        },
-        {
+          ],
           logging: false
         }
       );

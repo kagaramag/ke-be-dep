@@ -1,17 +1,18 @@
-import db from "../../models";
+import db from '../../models';
 
 /**
  * Get specific legal document
  * @param {object} userId User to identify the documents
  * @returns {object} Object representing the response returned
  */
-export default async userId => {
+export default async (userId) => {
   try {
     const response = await db.Legal.findOne({
       where: {
         userId
       },
-      logging: false
+      logging: false,
+      raw: true
     });
     return response;
   } catch (error) {

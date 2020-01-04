@@ -5,13 +5,12 @@ import db from '../../models';
  * @param {object} userId User to identify their details
  * @returns {object} Object representing the response returned
  */
-export default async userId => {
+export default async (userId) => {
   try {
     const response = await db.TutorDetails.findOne({
-      where: {
-        userId
-      },
-      logging: false
+      where: userId,
+      logging: false,
+      raw: true
     });
     return response;
   } catch (error) {

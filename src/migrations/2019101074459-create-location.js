@@ -13,6 +13,7 @@ export default {
         model: 'Users',
         key: 'id'
       },
+      unique: true,
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
@@ -34,7 +35,7 @@ export default {
     },
     village: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     houseNumber: {
       type: Sequelize.STRING,

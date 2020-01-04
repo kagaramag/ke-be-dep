@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const Location = sequelize.define("Location", {
+  const Location = sequelize.define('Location', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -9,12 +9,13 @@ export default (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
       references: {
-        model: "Users",
-        key: "id"
+        model: 'Users',
+        key: 'id'
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     province: {
       type: DataTypes.STRING,
@@ -34,7 +35,7 @@ export default (sequelize, DataTypes) => {
     },
     village: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     houseNumber: {
       type: DataTypes.STRING,
@@ -50,7 +51,7 @@ export default (sequelize, DataTypes) => {
     }
   });
   Location.associate = models => {
-    Location.belongsTo(models.User, { foreignKey: "userId", as: "user" });
+    Location.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
   };
   return Location;
 };

@@ -68,11 +68,6 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: 0
       },
-      rating: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 export default input => {
   const schema = Joi.object().keys({
@@ -6,7 +6,7 @@ export default input => {
     district: Joi.string().required(),
     sector: Joi.string().required(),
     cell: Joi.string().required(),
-    village: Joi.string().required(),
+    village: Joi.string().optional(),
     houseNumber: Joi.string()
   });
   return Joi.validate(input, schema, { abortEarly: false });

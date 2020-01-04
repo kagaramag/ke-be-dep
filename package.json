@@ -1,23 +1,15 @@
 {
-  "name": "tutela",
+  "name": "keetela",
   "version": "1.0.0",
-  "description": "Tutoring",
+  "description": "Connect learners with trainers/tutors",
   "main": "src/index.js",
   "scripts": {
-    "test": "NODE_ENV=test sequelize db:migrate:undo:all && npm run db:migrate:test && npm run db:migrate:seed:test && NODE_ENV=test nyc mocha --require @babel/register --timeout 30000 src/tests/index.js",
-    "cover": "npm test && nyc report --reporter=text-lcov | coveralls",
-    "coveralls": "cat coverage/lcov.info | coveralls",
-    "start": "concurrently \"npm run db:migrate && npm run db:seed\" \"babel-node src/index.js\"",
+    "start": "npm run db:migrate && npm run db:seed && babel-node src/index.js",
     "dev": "concurrently \"npm run db:seed\"  \"nodemon src/index.js --exec babel-node --presets @babel/preset-env\"",
-    "scss": "npm-sass templates/sass/style.scss templates/css/style.css",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
-    "db:migrate:undo:all": "./node_modules/.bin/sequelize db:migrate:undo:all",
-    "db:migrate:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:migrate",
-    "db:migrate:seed:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:seed:all",
-    "db:migrate:undo:all:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:migrate:undo:all"
+    "db:migrate:undo:all": "./node_modules/.bin/sequelize db:migrate:undo:all"
   },
-  "": "",
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.7.0",

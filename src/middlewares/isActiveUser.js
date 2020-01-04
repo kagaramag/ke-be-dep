@@ -14,6 +14,8 @@ export default async (req, res, next) => {
     input.username = req.params.username;
   } else if (req.body && req.body.email) {
     input.email = req.body.email;
+  } else if (req.user && req.user.id) {
+    input.id = req.user.id;
   }
   const isUser = await helper.isUser(input);
   if (!isUser) {

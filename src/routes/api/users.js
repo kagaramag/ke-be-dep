@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../../controllers/UserController';
+import TutorDetailsController from '../../controllers/TutorDetailsController';
 import verifyToken from '../../middlewares/verifyToken';
 import validateUser from '../../middlewares/validateUser';
 import checkUpdateUserPermission from '../../middlewares/checkUpdateUserPermission';
@@ -26,9 +27,24 @@ router.get(
   // checkUpdateUserPermission,
   UserController.getAllByUsername
 );
-router.get('/email/confirm/:token', verifyToken, UserController.confirmEmailUpdate); // confirm email update
+router.get(
+  '/email/confirm/:token',
+  verifyToken,
+  UserController.confirmEmailUpdate
+); // confirm email update
 router.get('/tutors', asyncHandler(UserController.getAllTutors));
-router.get('/all', verifyToken, verifyAdmin, asyncHandler(UserController.getAll));
+router.get(
+  '/all',
+  verifyToken,
+  verifyAdmin,
+  asyncHandler(UserController.getAll)
+);
+router.put(
+  '/request-evaluation',
+  verifyToken,
+  isActiveUser,
+  TutorDetailsController.request
+);
 router.put(
   '/:id',
   verifyToken,
@@ -53,7 +69,13 @@ router.delete(
 );
 router.patch('/:username/unfollow', verifyToken, UserController.unfollow);
 
-router.get('/:id', verifyToken, verifyAdmin, checkUpdateUserPermission, AuthLocalController.getOne);
+router.get(
+  '/:id',
+  verifyToken,
+  verifyAdmin,
+  checkUpdateUserPermission,
+  AuthLocalController.getOne
+);
 router.post(
   '/',
   verifyToken,
@@ -62,5 +84,10 @@ router.post(
   checkSignUpPermission,
   AuthLocalController.create
 );
-router.patch('/:username/follow', verifyToken, isActiveUser, UserController.follow);
+router.patch(
+  '/:username/follow',
+  verifyToken,
+  isActiveUser,
+  UserController.follow
+);
 export default router;

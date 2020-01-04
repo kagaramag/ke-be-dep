@@ -3,6 +3,7 @@ import * as helper from '../helpers';
 import { Token } from '../queries';
 
 export default async (req, res, next) => {
+  
   const token = req.headers['access-token'] || req.params.token || null;
 
   if (!token) {
@@ -24,6 +25,5 @@ export default async (req, res, next) => {
   }
 
   req.user = decodedToken;
-
   return next();
 };

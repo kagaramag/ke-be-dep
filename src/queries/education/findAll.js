@@ -10,9 +10,10 @@ export default async (where) => {
     // const user = await getUserByUsername(username);
     const response = await db.Education.findAll({
       where,
-      logging: false
+      logging: false,
+      raw: true
     });
-    return response ? response.dataValues : null;
+    return response || null;
   } catch (error) {
     return {
       error

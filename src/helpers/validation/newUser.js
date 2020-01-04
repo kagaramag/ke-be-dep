@@ -17,6 +17,7 @@ export default (input) => {
       .required()
       .label('Last name'),
     email: Joi.string()
+      .email()
       .min(5)
       .max(100)
       .required(),

@@ -11,16 +11,24 @@ export default async (user = {}) => {
     const slug = await generator.generateUsername(5);
     user = {
       ...user,
-      username: `${(user.firstName).toLowerCase()}-${slug}`
+      username: `${user.firstName.toLowerCase()}${slug}`
     };
     newUser = await db.User.create(user, { logging: false });
     // Assign a role to a given user
-    await db.UserRole.create(
+    const role = await db.UserRole.create(
       { roleId: user.role || 1, userId: newUser.dataValues.id },
       { logging: false }
     );
-    return newUser.dataValues;
+    // save tutor details
+    if (role.roleId === 3) {
+      await db.TutorDetails.create(
+        { userId: newUser.dataValues.id },
+        { logging: false }
+      );
+    }
+    return newUser;
   } catch (error) {
+    console.log('hello', error);
     return {
       errors: error
     };

@@ -113,11 +113,6 @@ export default (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       as: 'kids'
     });
-    User.hasMany(models.ArticleBookmark, {
-      foreignKey: 'userId',
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
   };
   return User;
 };
