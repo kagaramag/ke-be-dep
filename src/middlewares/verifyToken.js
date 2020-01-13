@@ -3,8 +3,7 @@ import * as helper from '../helpers';
 import { Token } from '../queries';
 
 export default async (req, res, next) => {
-  
-  const token = req.headers['access-token'] || req.params.token || null;
+  const token = req.headers['access-token'] || req.params.token || req.body.token || null;
 
   if (!token) {
     return res.status(status.UNAUTHORIZED).json({ errors: { authentication: 'Please, sign-in!' } });

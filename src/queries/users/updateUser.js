@@ -16,7 +16,7 @@ export default async (value = {}, condition = {}) => {
     return updatedUser[0] ? updatedUser[1][0].get() : {};
   } catch (error) {
     return {
-      errors: error
+      errors: error || 'Whoops, Something went wrong while updating your profile information'
     };
   }
 };

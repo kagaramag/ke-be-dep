@@ -4,9 +4,6 @@ import * as helper from '../helpers';
 import * as validate from '../helpers/validation';
 import status from '../config/status';
 
-const { CI } = process.env;
-const { appUrl, travis } = helper.urlHelper.frontend;
-
 /**
  * A class to handle user local authentication
  */
@@ -115,7 +112,7 @@ export default class AuthLocalController {
    * @description function for admin to create user
    * @param {object} req user request object
    * @param {object} res response object from server
-   * @returns {object} return true if user created or flase when was not
+   * @returns {object} return true if user created or false when was not
    */
   static async create(req, res) {
     const { email, firstName, lastName } = req.body;
@@ -139,12 +136,24 @@ export default class AuthLocalController {
    * @description function to activate user account
    * @param {object} req
    * @param {object} res
-   * @returns {object} it return true if account activeted otherwise it return false
+   * @returns {object} it return true if account activated otherwise it return false
    */
   static async activate(req, res) {
     const { user } = req;
-    await User.update({ isActive: true }, { email: user.email });
-    return res.redirect(`${(CI && travis) || appUrl}/login`);
+    const response = await User.update(
+      { isActive: true },
+      { email: user.email }
+    );
+    return response.errors
+      ? res.status(status.OK).json({
+          errors: {
+            verification:
+              'Whoops, something went wrong while activating your account. Contact us for help'
+          }
+        })
+      : res.status(status.OK).json({
+          message: 'Thank you for activating your account.'
+        });
   }
 
   /**
@@ -180,43 +189,33 @@ export default class AuthLocalController {
    */
   static async updatePassword(req, res) {
     const token = req.body.token || req.params.token;
-    const { passwordOne, passwordTwo } = req.body;
+    const { password } = req.body;
 
-    if (passwordOne !== passwordTwo) {
-      return res
-        .status(status.BAD_REQUEST)
-        .json({ errors: req.polyglot.t('passwordNotMatching') });
-    }
-
-    if (!req.body.passwordOne || !req.body.passwordTwo) {
+    if (!password) {
       return res
         .status(status.BAD_REQUEST)
         .json({ errors: req.polyglot.t('passEmpty') });
     }
 
     const isPasswordValid = validate.password(
-      passwordOne,
-      req.polyglot.t('required')
-    );
-    const isPasswordValidTwo = validate.password(
-      passwordTwo,
+      password,
       req.polyglot.t('required')
     );
 
-    if (isPasswordValid.length || isPasswordValidTwo.length) {
+    if (isPasswordValid.length) {
       return res
         .status(status.BAD_REQUEST)
-        .json({ message: isPasswordValid[0] });
+        .json({ errors: { password: isPasswordValid[0] } });
     }
     const { email } = helper.token.decode(token);
     const isUpdated = await User.update(
-      { password: helper.password.hash(passwordOne) },
+      { password: helper.password.hash(password) },
       { email }
     );
     delete isUpdated.password;
     return isUpdated
       ? res.status(status.OK).json({
-          isUpdated,
+          user: isUpdated,
           message: req.polyglot.t('passChanged')
         })
       : res

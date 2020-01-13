@@ -20,16 +20,15 @@ export default async (to, action, data) => {
     from: EMAIL_SENDER,
     subject: notifier.subject,
     fromname: 'Keetela - Igniting minds for success',
-    text: 'Keetela',
-    html: `<div style="width:100%;background:#efefef;font-family:'Open Sans', sans-serif;font-weight:300">
+    text: 'Keetela.com',
+    html: `<div style="width:100%;background:#ffffff;font-family:'Open Sans', sans-serif;font-weight:300">
     <!-- HEADER -->
     <div style="padding:10px 25px;">
-       <img src="https://res.cloudinary.com/ninjas/image/upload/v1572621122/GILLES_BUSINESS_CARD_1_2_zqymjv.png"
-       style="width:100%;max-width:300px;height:auto;margin:15px auto;display:block;" alt="Keetela"
+       <img src="https://res.cloudinary.com/ninjas/image/upload/v1578860690/logo_XII_blue_vqpfkc.svg"
+       style="width:100%;max-width:240px;height:80px;margin:15px auto;display:block;" alt="Keetela"
     </div>
     <!-- BODY -->
-    <div style="max-width:700px;background:#ffffff;width:96%;margin:15px auto;font-size:16px;display:block;border:1px solid #cdcdcd;border-top:none;border-radius:0 0 10px 10px;padding:0;box-shadow:0 0 25px rgba(0,0,0,0.17)">
-       <div style="background:#304894;height:12px"></div>
+    <div style="max-width:700px;background:#ffffff;width:96%;margin:15px auto;font-size:16px;display:block;padding:0;">
        <div style="padding:25px">
           ${notifier.html} 
           <br>
@@ -37,9 +36,9 @@ export default async (to, action, data) => {
           The Keetela Team
        </div>
     </div>
-    <div style="padding:5px 30px;text-align:center">${motto}</div>
-    <div style="text-align:center;padding:10px 25px 35px 25px;color:#878787">
-       <div>  &copy;Copyright ${new Date().getFullYear()}, <b>Keetela</b> Ltd</div>
+    <div style="padding:5px 15px;text-align:center;font-size:14px;">${motto}</div>
+    <div style="font-size:14px;text-align:center;padding:5px 25px 35px 25px;color:#878787">
+       <div>  &copy; Copyright ${new Date().getFullYear()}, <b>Keetela</b> Ltd</div>
     </div>
     <!-- BODY, END -->
  </div>`

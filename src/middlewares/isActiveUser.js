@@ -26,7 +26,7 @@ export default async (req, res, next) => {
   const isActive = await helper.isActiveUser(input);
   if (!isActive && !(req.user && req.user.role === 'admin')) {
     return res.status(status.UNAUTHORIZED).json({
-      errors: { account: 'You can not log in now, check your email to activate your account or contact us for help' }
+      errors: { account: 'This account is not active. Kindly check your email to activate it or contact us for help' }
     });
   }
   next();

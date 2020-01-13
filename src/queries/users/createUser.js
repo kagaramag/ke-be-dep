@@ -28,7 +28,6 @@ export default async (user = {}) => {
     }
     return newUser;
   } catch (error) {
-    console.log('hello', error);
     return {
       errors: error
     };

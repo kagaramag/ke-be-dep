@@ -7,8 +7,8 @@ export default (data) => {
   const message = {};
   const token = generateToken({ email: data.email }, { expiresIn: '1h' });
   const appUrl = process.env.APP_URL_FRONTEND;
-  const link = `${appUrl}/en/reset/${token}`;
-  message.subject = 'Reset your password - Authors keetela';
+  const link = `${appUrl}/confirm/${token}`;
+  message.subject = 'Reset your password - Keetela';
   message.html = `Hello ${data.names} </br>,
   <p>You are receiving this because you have requested the reset of the password,<br>
    Click on the reset link bellow to complete the process<br>

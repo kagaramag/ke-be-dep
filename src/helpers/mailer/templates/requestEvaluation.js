@@ -13,7 +13,7 @@ export default async (data = {}) => {
   To continue, click on the link below.<br>
     <div style="width:100%;margin:10px 0;clear:both">
     <a
-      href="${data.domain}/en/dashboard/t"
+      href="${data.domain}/dashboard/t"
       style="margin:35px 0;padding:13px 35px;background:#304894;color:#ffffff;clear:both;border-radius:30px;text-decoration:none"
       target='_blank'
     >

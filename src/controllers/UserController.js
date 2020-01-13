@@ -237,7 +237,7 @@ export default class UserController {
   }
 
   /**
-   * @description function to fetch all authors who user follow
+   * @description retrieving my following
    * @param {object} req
    * @param {object} res
    * @returns {object} followers
