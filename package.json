@@ -4,7 +4,7 @@
   "description": "Connect learners with trainers/tutors",
   "main": "src/index.js",
   "scripts": {
-    "start": "npm run db:migrate && npm run db:seed && babel-node src/index.js",
+    "start": "export NODE_ENV=production && npm run db:migrate && npm run db:seed && babel-node src/index.js",
     "dev": "concurrently \"npm run db:seed\"  \"nodemon src/index.js --exec babel-node --presets @babel/preset-env\"",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
