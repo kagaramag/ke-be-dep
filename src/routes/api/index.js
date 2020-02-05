@@ -18,6 +18,8 @@ import tutoring from './tutoring';
 import tutorship from './tutorship';
 import location from './location';
 import legal from './legal';
+import services from './services';
+import payments from './payments';
 
 const router = express.Router();
 
@@ -40,5 +42,7 @@ router.use('/kids', kids);
 router.use('/tutoring', tutoring);
 router.use('/tutorship', tutorship);
 router.use('/location', location);
+router.use('/services', services);
+router.use('/payments', payments);
 
 export default router;

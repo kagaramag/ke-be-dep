@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Education', {
+    queryInterface.createTable('Promocodes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,30 +14,21 @@ export default {
           model: 'Users',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
-      certificate: {
-        type: Sequelize.ENUM('Bachelor', 'Advanced diploma', 'Diploma'),
+      code: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      graduated: {
-        type: Sequelize.BOOLEAN,
+      percent: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      yearOfGraduation: {
+      endingDate: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      college: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      institution: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      course: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -46,9 +37,10 @@ export default {
         type: Sequelize.DATE
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.DATE('NOW')
       }
     }),
-  down: queryInterface => queryInterface.dropTable('Education')
+  down: queryInterface => queryInterface.dropTable('Promocodes')
 };

@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
-  const Education = sequelize.define(
-    'Education',
+  const Promocode = sequelize.define(
+    'Promocode',
     {
       id: {
         allowNull: false,
@@ -15,31 +15,22 @@ export default (sequelize, DataTypes) => {
           model: 'Users',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
-      graduated: {
-        type: DataTypes.BOOLEAN,
+      code: {
+        type: DataTypes.STRING,
         allowNull: false
       },
-      yearOfGraduation: {
+      percent: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      endingDate: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      college: {
+      description: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      institution: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      course: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      certificate: {
-        type: DataTypes.ENUM('Bachelor', 'Advanced diploma', 'Diploma'),
         allowNull: false
       },
       createdAt: {
@@ -47,14 +38,18 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.DATE
       },
       updatedAt: {
+        type: DataTypes.DATE,
         allowNull: false,
-        type: DataTypes.DATE
+        defaultValue: DataTypes.DATE('NOW')
       }
     },
     {}
   );
-  Education.associate = models => {
-    Education.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+  Promocode.associate = (models) => {
+    Promocode.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'user'
+    });
   };
-  return Education;
+  return Promocode;
 };

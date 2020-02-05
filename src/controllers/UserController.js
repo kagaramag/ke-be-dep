@@ -107,7 +107,8 @@ export default class UserController {
           education: response.education || null,
           legal: response.legal || null,
           location: response.location || null,
-          details: response.details || null
+          details: response.details || null,
+          services: response.services || null
         })
       : res
           .status(status.NOT_FOUND)

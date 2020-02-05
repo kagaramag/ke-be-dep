@@ -6,7 +6,8 @@ import {
   Education,
   Legal,
   Location,
-  TutorDetails
+  TutorDetails,
+  query
 } from '../../queries';
 
 export default async (username) => {
@@ -25,6 +26,8 @@ export default async (username) => {
   const education = await Education.findAll({ userId: user.id });
   // get user legal document
   const details = await TutorDetails.findOne({ userId: user.id });
+  // get user education
+  const services = await query.findAll('Service', { userId: user.id });
   // get user legal document
   const legal = await Legal.findOne(user.id);
   let paper;
@@ -59,6 +62,7 @@ export default async (username) => {
     education,
     legal: paper || null,
     location,
-    details
+    details,
+    services
   };
 };

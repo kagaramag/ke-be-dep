@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { TutorDetails, helpers } from '../queries';
+import { query } from '../queries';
 import status from '../config/status';
 import { sendMail } from '../helpers';
 
@@ -14,13 +14,13 @@ export default class UserController {
    */
   static async request(req, res) {
     const userId = req.userId || req.user.id;
-    const updatedDetails = await helpers.updateOne(
+    const updatedDetails = await query.updateOne(
       'TutorDetails',
       { evaluation: true },
       { userId }
     );
     if (updatedDetails[0]) {
-      const user = await helpers.findOne('User', { id: req.user.id });
+      const user = await query.findOne('User', { id: req.user.id });
       if (user.email) {
         await sendMail(user.email, 'requestEvaluation', {
           id: user.id,
