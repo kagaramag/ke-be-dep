@@ -53,6 +53,7 @@ export default class ArticleController {
     );
     if (articles.length >= 1 && !!articles) {
       return res.status(status.OK).send({
+        status: 200,
         articles,
         articlesCount: await helpers.articles.counter('published')
       });

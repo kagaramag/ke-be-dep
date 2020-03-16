@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "export NODE_ENV=production && npm run db:migrate && npm run db:seed && babel-node src/index.js",
-    "dev": "concurrently \"npm run db:seed\"  \"nodemon src/index.js --exec babel-node --presets @babel/preset-env\"",
+    "dev": "export NODE_ENV=development && concurrently \"npm run db:seed\"  \"nodemon src/index.js --exec babel-node --presets @babel/preset-env\"",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
     "db:migrate:undo:all": "./node_modules/.bin/sequelize db:migrate:undo:all"

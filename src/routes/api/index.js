@@ -20,6 +20,7 @@ import location from './location';
 import legal from './legal';
 import services from './services';
 import payments from './payments';
+import subscriptions from './subscriptions';
 
 const router = express.Router();
 
@@ -44,5 +45,6 @@ router.use('/tutorship', tutorship);
 router.use('/location', location);
 router.use('/services', services);
 router.use('/payments', payments);
+router.use('/subscriptions', subscriptions);
 
 export default router;

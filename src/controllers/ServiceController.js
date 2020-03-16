@@ -2,7 +2,7 @@ import status from '../config/status';
 import { query } from '../queries';
 
 /**
- * A class to handle actions performed on article tags
+ * A class to handle actions performed on services
  */
 class ServiceController {
   /**
