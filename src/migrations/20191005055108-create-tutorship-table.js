@@ -17,7 +17,7 @@ export default {
       onDelete: 'CASCADE'
     },
     senderId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       references: {
         model: 'Users',
@@ -27,7 +27,7 @@ export default {
       onDelete: 'CASCADE'
     },
     receiverId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       references: {
         model: 'Users',

@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING
       },
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',

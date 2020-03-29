@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',

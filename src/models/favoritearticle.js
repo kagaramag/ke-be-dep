@@ -3,7 +3,7 @@ export default (sequelize, DataTypes) => {
     'FavoriteArticle',
     {
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
         references: {

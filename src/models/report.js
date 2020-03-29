@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: true,
         references: {
           model: 'Users',

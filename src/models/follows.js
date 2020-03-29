@@ -3,7 +3,7 @@ export default (sequelize, DataTypes) => {
     'Follows',
     {
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
         references: {
@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
           key: 'id'
         },
         followed: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.UUID,
           allowNull: false,
           primaryKey: true,
           references: {

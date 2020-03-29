@@ -1,7 +1,7 @@
 export default {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Follows', {
     userId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       primaryKey: true,
       references: {
@@ -10,7 +10,7 @@ export default {
       }
     },
     followed: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       primaryKey: true,
       references: {

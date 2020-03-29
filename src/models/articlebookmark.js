@@ -3,7 +3,7 @@ export default (sequelize, DataTypes) => {
     'ArticleBookmark',
     {
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
         references: {

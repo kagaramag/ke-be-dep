@@ -7,7 +7,7 @@ export default {
       type: Sequelize.INTEGER
     },
     receiverId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       references: {
         model: 'Users',

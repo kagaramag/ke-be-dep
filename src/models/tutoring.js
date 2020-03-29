@@ -24,7 +24,7 @@ export default (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
       tutorId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',

@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       payeeId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Users',
@@ -17,7 +17,7 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       payerId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Users',

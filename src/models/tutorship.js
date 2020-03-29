@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
       senderId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',
@@ -29,7 +29,7 @@ export default (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
       receiverId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',
